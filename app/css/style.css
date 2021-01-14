@@ -1,12 +1,17 @@
+:root {
+    --clr-primary: #0700D0;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
+html, body, main {
     font-family: Arial, Helvetica, sans-serif;
     background-color: #111;
+    height: 100%;
 }
 
 a {
@@ -149,6 +154,7 @@ nav .nav-footer {
 /* SOCIALS */
 
 .social {
+    color: black;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -170,11 +176,19 @@ nav .nav-footer {
 }
 
 .social:hover {
-    transform: translate(0, -10px);
     color: white;
+    transform: translate(0, -10px);
+    -webkit-transform: translate(0, -10px);
+    -moz-transform: translate(0, -10px);
+    -ms-transform: translate(0, -10px);
+    -o-transform: translate(0, -10px);
 }
 
 .social.insta:hover {
-    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    background: #f09433;
+    background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    background: -webkit-linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+    background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,      #bc1888 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
 }
 
