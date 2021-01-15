@@ -19,7 +19,18 @@
                 </div>
             </div>
         </div>
+
+        <div class="index-img-container">
+            <div class="index-img-1">
+                <img src="includes/index1.jpg" alt="">
+            </div>
+            <div class="index-img-2">
+                <img src="includes/index2.jpg" alt="">
+            </div>
+        </div>
     </div>
+    
+    
 </main>
 
 <!-- FOOTER -->
