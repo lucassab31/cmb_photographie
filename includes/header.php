@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="app/css/style.css">
     <link rel="stylesheet" href="app/css/index.css">
+    <link rel="stylesheet" href="app/css/photographies.css">
 </head>
 <body>
     <header>
@@ -25,7 +26,7 @@
                     <a href="index.php">accueil</a>
                 </div>
                 <div class="link">
-                    <a href="#">photographies</a>
+                    <a href="photographies.php">photographies</a>
                 </div>
                 <div class="link">
                     <a href="#">avis & questions</a>

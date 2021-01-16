@@ -168,8 +168,15 @@ nav .nav-footer {
     transform: translate(-50%, -50%);
 }
 
-/* SOCIALS */
+/* TYPO */
+.page-title {
+    font-size: 1.5em;
+    text-align: center;
+    color: #f5f5f5;
+    margin: 2em;
+}
 
+/* SOCIALS */
 .social {
     color: black;
     display: flex;
@@ -209,3 +216,8 @@ nav .nav-footer {
     background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
 }
 
+@media only screen and (max-width: 1024px) {
+    .page-title {
+        font-size: 1em;
+    }
+}

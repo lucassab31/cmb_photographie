@@ -10,6 +10,7 @@
     width: 320px;
     height: 320px;
     perspective: 1000px;
+    -webkit-perspective: 1000px;
     z-index: 5;
 }
 
@@ -132,4 +133,19 @@
     -moz-transform: translate(0, -10px);
     -ms-transform: translate(0, -10px);
     -o-transform: translate(0, -10px);
+}
+
+@media only screen and (max-width: 600px) {
+    .logo, .logo-front img {
+        width: 220px;
+        height: 220px;
+    }
+
+    .logo-back .socials {
+        transform: scale(1.5);
+        -webkit-transform: scale(1.5);
+        -moz-transform: scale(1.5);
+        -ms-transform: scale(1.5);
+        -o-transform: scale(1.5);
+}
 }

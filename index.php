@@ -2,6 +2,7 @@
 <?php
     require_once('includes/header.php');
 ?>
+
 <!-- MAIN -->
 <main>
     <div class="index">
@@ -37,10 +38,6 @@
             </a>
         </div>
     </div>
-
-    
-    
-    
 </main>
 
 <!-- FOOTER -->
