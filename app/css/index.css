@@ -17,8 +17,13 @@
     position: relative;
     width: 100%;
     height: 100%;
-    transition: transform 0.6s;
     transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    transition: transform 0.6s;
+    -webkit-transition: transform 0.6s;
+    -moz-transition: transform 0.6s;
+    -ms-transition: transform 0.6s;
+    -o-transition: transform 0.6s;
 }
 
 .logo:hover .logo-content {
@@ -34,7 +39,7 @@
     width: 100%;
     height: 100%;
     -webkit-backface-visibility: hidden;
-    backface-visibility: hidden
+    backface-visibility: hidden;
 }
 
 .logo-front {
@@ -104,4 +109,27 @@
 
 .index-img-1:hover, .index-img-2:hover {
     opacity: 1;
+}
+
+.index-footer {
+    position: absolute;
+    left: 1%;
+    bottom: 1%;
+    transition: all 200ms ease-in-out;
+    -webkit-transition: all 200ms ease-in-out;
+    -moz-transition: all 200ms ease-in-out;
+    -ms-transition: all 200ms ease-in-out;
+    -o-transition: all 200ms ease-in-out;
+}
+
+.index-footer a {
+    color: #ffffff;
+}
+
+.index-footer:hover {
+    transform: translate(0, -10px);
+    -webkit-transform: translate(0, -10px);
+    -moz-transform: translate(0, -10px);
+    -ms-transform: translate(0, -10px);
+    -o-transform: translate(0, -10px);
 }

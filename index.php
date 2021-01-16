@@ -12,9 +12,11 @@
                 </div>
                 <div class="logo-back">
                     <div class="socials">
-                        <div class="social insta">
-                            <i class="fab fa-instagram" style></i>
-                        </div>
+                        <a href="https://www.instagram.com/cmb__photographie/" target="_blank" rel="noopener noreferrer">
+                            <div class="social insta">
+                                    <i class="fab fa-instagram"></i>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -28,7 +30,15 @@
                 <img src="includes/index2.jpg" alt="">
             </div>
         </div>
+
+        <div class="index-footer">
+            <a href="https://www.instagram.com/cmb__photographie/" target="_blank" rel="noopener noreferrer">
+                <h3>@cmb_photographie</h3>
+            </a>
+        </div>
     </div>
+
+    
     
     
 </main>

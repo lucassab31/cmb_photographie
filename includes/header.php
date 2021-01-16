@@ -42,9 +42,11 @@
             </div>
             <div class="nav-footer">
                 <div class="socials">
-                    <div class="social insta">
-                        <i class="fab fa-instagram" style></i>
-                    </div>
+                    <a href="https://www.instagram.com/cmb__photographie/" target="_blank" rel="noopener noreferrer">
+                        <div class="social insta">
+                                <i class="fab fa-instagram"></i>
+                        </div>
+                    </a>
                 </div>
             </div>
             
