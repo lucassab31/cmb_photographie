@@ -7,7 +7,12 @@
 <main>
     <div class="page-title">
         <h1>Photographies</h1>
-    </div>    
+    </div>
+    <div class="page-selector" id="selector">
+        <button id="toutes" onclick="activateBtn('toutes')" class="active">Toutes</button>
+        <button id="pro" onclick="activateBtn('pro')">Professionnelles</button>
+        <button id="perso" onclick="activateBtn('perso')">Personnelles</button>
+    </div>
 
     <div class="grid">
         <div class="item">
@@ -46,7 +51,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/muuri@0.9.3/dist/muuri.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/web-animations-js@2.3.2/web-animations.min.js"></script>
-<script src="app/js/app.js"></script>
 <script>
     var grid = new Muuri('.grid', {
         dragEnabled: false,
@@ -60,5 +64,12 @@
     window.addEventListener('load', function () {
         grid.refreshItems().layout();
     });
+
+    function activateBtn(id) {
+        var btnActive = document.getElementById("selector").getElementsByClassName("active");
+        btnActive[0].classList.remove("active");
+        var btn = document.getElementById(id);
+        btn.classList.toggle("active");
+    }
 </script>
 <!-- FOOTER -->

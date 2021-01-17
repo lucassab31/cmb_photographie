@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="app/css/photographies.css">
 </head>
 <body>
+    <div class="loading">
+        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+    </div>
     <header>
         <div class="header-logo">
             <a href="index.php">
@@ -55,10 +58,7 @@
             </div>
             
         </nav>
-    </header>    
+    </header>
     <script src="app/js/nav.js"></script>
-    <div class="loading">
-        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-    </div>
 </body>
 </html>

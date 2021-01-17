@@ -199,12 +199,83 @@ nav .nav-footer {
     display: none;
 }
 
-/* TYPO */
+/* GENERAL */
 .page-title {
     font-size: 1.5em;
     text-align: center;
     color: white;
     margin: 2em;
+}
+
+.page-selector {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.page-selector button {
+    border: none;
+    color: white;
+    padding: 8px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1.3em;
+    margin: 4px 2px;
+    cursor: pointer;
+    background-color: #111;
+    border: 2px solid #f5f5f5;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    transition: 200ms;
+    -webkit-transition: 200ms;
+    -moz-transition: 200ms;
+    -ms-transition: 200ms;
+    -o-transition: 200ms;
+}
+
+.page-selector button:hover,
+.page-selector button:focus {
+  box-shadow: 0 0.5em 0.5em -0.4em white;
+  transform: translateY(-0.25em);
+  outline: none;
+  -webkit-transform: translateY(-0.25em);
+  -moz-transform: translateY(-0.25em);
+  -ms-transform: translateY(-0.25em);
+  -o-transform: translateY(-0.25em);
+}
+
+.page-selector .active {
+    box-shadow: 0 0.5em 0.5em -0.4em white;
+    background-color: #f5f5f5;
+    color: black;
+    font-weight: bold;
+    animation: fadein 1s;
+    -webkit-animation: fadein 1s;
+    transform: translateY(-0.25em);
+    -webkit-transform: translateY(-0.25em);
+    -moz-transform: translateY(-0.25em);
+    -ms-transform: translateY(-0.25em);
+    -o-transform: translateY(-0.25em);
+}
+
+@keyframes fadein {
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+
+@-webkit-keyframes fadein { /* sur Safari et Chrome */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
 }
 
 /* SOCIALS */
@@ -252,14 +323,6 @@ nav .nav-footer {
     display: none;
 }
 
-main {
-    opacity: 0.6;
-}
-
-.loaded main {
-    opacity: 1;
-}
-
 .loading {
     z-index: 15;
     display: flex;
@@ -270,6 +333,7 @@ main {
     right: 0;
     top: 0;
     bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .lds-ring {
@@ -311,5 +375,9 @@ main {
 @media only screen and (max-width: 1024px) {
     .page-title {
         font-size: 1em;
+    }
+
+    .header-logo {
+        display: none;
     }
 }
