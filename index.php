@@ -39,5 +39,3 @@
         </div>
     </div>
 </main>
-
-<!-- FOOTER -->

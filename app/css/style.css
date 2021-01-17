@@ -16,6 +16,8 @@ html, body, main {
     background-color: #111;
     height: 100%;
     width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 a {
@@ -168,11 +170,40 @@ nav .nav-footer {
     transform: translate(-50%, -50%);
 }
 
+.header-logo {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+}
+
+.header-logo a img {
+    height: 160px;
+    box-shadow: 0 5px 4px rgba(0,0,0,.5);
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    transition: all 200ms ease-in-out;
+    -webkit-transition: all 200ms ease-in-out;
+    -moz-transition: all 200ms ease-in-out;
+    -ms-transition: all 200ms ease-in-out;
+    -o-transition: all 200ms ease-in-out;
+}
+
+.header-logo a img:hover {
+    border: 2px solid white;
+}
+
+.header-none .header-logo {
+    display: none;
+}
+
 /* TYPO */
 .page-title {
     font-size: 1.5em;
     text-align: center;
-    color: #f5f5f5;
+    color: white;
     margin: 2em;
 }
 
@@ -217,7 +248,6 @@ nav .nav-footer {
 }
 
 /* LOADER */
-
 .loaded .loading {
     display: none;
 }

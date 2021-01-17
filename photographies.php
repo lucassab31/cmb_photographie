@@ -7,12 +7,7 @@
 <main>
     <div class="page-title">
         <h1>Photographies</h1>
-    </div>
-
-    <div class="loading">
-        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-    </div>
-    
+    </div>    
 
     <div class="grid">
         <div class="item">
@@ -51,7 +46,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/muuri@0.9.3/dist/muuri.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/web-animations-js@2.3.2/web-animations.min.js"></script>
-
+<script src="app/js/app.js"></script>
 <script>
     var grid = new Muuri('.grid', {
         dragEnabled: false,
@@ -63,11 +58,7 @@
     // When all items have loaded refresh their
     // dimensions and layout the grid.
     window.addEventListener('load', function () {
-    grid.refreshItems().layout();
-    // For a little finishing touch, let's fade in
-    // the images after all them have loaded and
-    // they are corrertly positioned.
-    document.body.classList.add('images-loaded');
+        grid.refreshItems().layout();
     });
 </script>
 <!-- FOOTER -->

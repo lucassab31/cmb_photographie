@@ -12,7 +12,10 @@
 </head>
 <body>
     <header>
-        <div class="header_logo">
+        <div class="header-logo">
+            <a href="index.php">
+                <img src="includes/logo.jpg" alt="">
+            </a>
         </div>
 
         <nav class="nav">
@@ -52,7 +55,7 @@
             </div>
             
         </nav>
-    </header>
+    </header>    
     <script src="app/js/nav.js"></script>
     <div class="loading">
         <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
