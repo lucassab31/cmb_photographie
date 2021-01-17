@@ -9,6 +9,11 @@
         <h1>Photographies</h1>
     </div>
 
+    <div class="loading">
+        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+    </div>
+    
+
     <div class="grid">
         <div class="item">
             <div class="item-content">
@@ -48,6 +53,21 @@
 <script src="https://cdn.jsdelivr.net/npm/web-animations-js@2.3.2/web-animations.min.js"></script>
 
 <script>
-    var grid = new Muuri('.grid');
+    var grid = new Muuri('.grid', {
+        dragEnabled: false,
+        layout: {
+            fillGaps: true
+        }
+    });
+
+    // When all items have loaded refresh their
+    // dimensions and layout the grid.
+    window.addEventListener('load', function () {
+    grid.refreshItems().layout();
+    // For a little finishing touch, let's fade in
+    // the images after all them have loaded and
+    // they are corrertly positioned.
+    document.body.classList.add('images-loaded');
+    });
 </script>
 <!-- FOOTER -->

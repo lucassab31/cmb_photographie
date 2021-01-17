@@ -54,5 +54,8 @@
         </nav>
     </header>
     <script src="app/js/nav.js"></script>
+    <div class="loading">
+        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+    </div>
 </body>
 </html>

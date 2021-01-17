@@ -1,15 +1,22 @@
-/* .photographies-container {
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 80vw;
+.images-loaded .loading {
+    opacity: 0;
 }
 
-.photographie {
-    width: 20vw;
-    overflow: hidden;
-} */
+.images-loaded .grid {
+    opacity: 1;
+}
+
+.loading {
+    z-index: 15;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
 
 .grid {
     position: relative;
@@ -20,7 +27,7 @@
     overflow: hidden;
     display: block;
     position: absolute;
-    width: 450px;
+    width: 400px;
     height: auto;
     margin: 5px;
     z-index: 1;
