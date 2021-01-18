@@ -59,6 +59,6 @@
             
         </nav>
     </header>
-    <script src="app/js/nav.js"></script>
+    <script src="app/js/app.js"></script>
 </body>
 </html>

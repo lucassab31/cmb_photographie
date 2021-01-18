@@ -15,61 +15,69 @@
     </div>
 
     <div class="grid">
-        <div class="item">
-            <div class="item-content">
-                <img src="img/1.jpg" alt="img1">
-
+            <div class="item">
+                <div class="content">
+                    <div class="content-overlay"></div>
+                    <img src="img/1.jpg" alt="img1">
+                    <div class="content-details fadeIn-bottom">
+                        <h3 class="content-title">Titre de la photo</h3>
+                        <h4 class="content-subtitle"><i class="fas fa-map-marker-alt"></i> Lieu</h4>
+                        <p class="content-text">Dsec</p>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="content">
+                    <div class="content-overlay"></div>
+                    <img src="img/2.jpg" alt="img2">
+                    <div class="content-details fadeIn-bottom">
+                        <h3 class="content-title">This is a title</h3>
+                        <p class="content-text">This is a short description</p>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="content">
+                    <div class="content-overlay"></div>
+                    <img src="img/3.jpg" alt="img3">
+                    <div class="content-details fadeIn-bottom">
+                        <h3 class="content-title">This is a title</h3>
+                        <p class="content-text">This is a short description</p>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="content">
+                    <div class="content-overlay"></div>
+                    <img src="img/4.jpg" alt="img4">
+                    <div class="content-details fadeIn-bottom">
+                        <h3 class="content-title">This is a title</h3>
+                        <p class="content-text">This is a short description</p>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="content">
+                    <div class="content-overlay"></div>
+                    <img src="img/5.jpg" alt="img5">
+                    <div class="content-details fadeIn-bottom">
+                        <h3 class="content-title">This is a title</h3>
+                        <p class="content-text">This is a short description</p>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="content">
+                    <div class="content-overlay"></div>
+                    <img src="img/6.jpg" alt="img6">
+                    <div class="content-details fadeIn-bottom">
+                        <h3 class="content-title">This is a title</h3>
+                        <p class="content-text">This is a short description</p>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="item">
-            <div class="item-content">
-                <img src="img/2.jpg" alt="img2">
-            </div>
-        </div>
-        <div class="item">
-            <div class="item-content">
-                <img src="img/3.jpg" alt="img3">
-            </div>
-        </div>
-        <div class="item">
-            <div class="item-content">
-                <img src="img/4.jpg" alt="img4">
-            </div>
-        </div>
-        <div class="item">
-            <div class="item-content">
-                <img src="img/5.jpg" alt="img5">
-            </div>
-        </div>
-        <div class="item">
-            <div class="item-content">
-                <img src="img/6.jpg" alt="img6">
-            </div>
-        </div>
-    </div>
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/muuri@0.9.3/dist/muuri.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/web-animations-js@2.3.2/web-animations.min.js"></script>
-<script>
-    var grid = new Muuri('.grid', {
-        dragEnabled: false,
-        layout: {
-            fillGaps: true
-        }
-    });
-
-    // When all items have loaded refresh their
-    // dimensions and layout the grid.
-    window.addEventListener('load', function () {
-        grid.refreshItems().layout();
-    });
-
-    function activateBtn(id) {
-        var btnActive = document.getElementById("selector").getElementsByClassName("active");
-        btnActive[0].classList.remove("active");
-        var btn = document.getElementById(id);
-        btn.classList.toggle("active");
-    }
-</script>
+<script src="app/js/grid.js"></script>
 <!-- FOOTER -->
