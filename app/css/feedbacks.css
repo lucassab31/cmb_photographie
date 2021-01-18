@@ -57,3 +57,10 @@
     padding: 10px;
     font-size: 1.2em;
 }
+
+@media only screen and (max-width: 600px) {
+    .item-header {
+        text-align: center;
+        display: block;
+    }
+}
