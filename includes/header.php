@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="app/css/style.css">
     <link rel="stylesheet" href="app/css/index.css">
     <link rel="stylesheet" href="app/css/photographies.css">
+    <link rel="stylesheet" href="app/css/about.css">
 </head>
 <body>
     <div class="loading">
@@ -41,7 +42,7 @@
                     <a href="#">prestations</a>
                 </div>
                 <div class="link">
-                    <a href="#">a propos</a>
+                    <a href="about.php">a propos</a>
                 </div>
                 <div class="link">
                     <a href="#">contact</a>
