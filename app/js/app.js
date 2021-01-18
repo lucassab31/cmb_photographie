@@ -12,3 +12,5 @@ function activateBtn(id) {
     var btn = document.getElementById(id);
     btn.classList.toggle("active");
 }
+
+document.addEventListener("click", x=>0)

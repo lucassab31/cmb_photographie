@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" ontouchmove>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="app/css/style.css">
     <link rel="stylesheet" href="app/css/index.css">
     <link rel="stylesheet" href="app/css/photographies.css">
+    <link rel="stylesheet" href="app/css/feedbacks.css">
+    <link rel="stylesheet" href="app/css/prestations.css">
     <link rel="stylesheet" href="app/css/about.css">
 </head>
 <body>
@@ -36,10 +38,10 @@
                     <a href="photographies.php">photographies</a>
                 </div>
                 <div class="link">
-                    <a href="#">avis & questions</a>
+                    <a href="feedbacks.php">avis & questions</a>
                 </div>
                 <div class="link">
-                    <a href="#">prestations</a>
+                    <a href="prestations.php">prestations</a>
                 </div>
                 <div class="link">
                     <a href="about.php">a propos</a>
@@ -61,5 +63,3 @@
         </nav>
     </header>
     <script src="app/js/app.js"></script>
-</body>
-</html>
