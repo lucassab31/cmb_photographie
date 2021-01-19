@@ -4,6 +4,11 @@
     --clr-primary: #0700D0;
     --clr-white: #f5f5f5;
     --clr-black: #111;
+
+    --yellow: #feb60a;
+	--red: #ff0062;
+	--blue: #00dbf9;
+	--violet: #da00f7;
 }
 
 * {
@@ -184,8 +189,9 @@ nav .nav-footer {
 }
 
 .header-logo a img {
+    cursor: pointer;
     height: 160px;
-    box-shadow: 0 5px 4px rgba(0,0,0,.5);
+     box-shadow: 0 5px 4px rgba(0,0,0,.5);
     border-radius: 50%;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
@@ -196,10 +202,15 @@ nav .nav-footer {
     -moz-transition: all 200ms ease-in-out;
     -ms-transition: all 200ms ease-in-out;
     -o-transition: all 200ms ease-in-out;
+    border: 2px solid white;
 }
 
 .header-logo a img:hover {
-    border: 2px solid white;
+    transform: translate(0, -10px);
+    -webkit-transform: translate(0, -10px);
+    -moz-transform: translate(0, -10px);
+    -ms-transform: translate(0, -10px);
+    -o-transform: translate(0, -10px);
 }
 
 .header-none .header-logo {
@@ -333,51 +344,58 @@ nav .nav-footer {
 
 .loading {
     z-index: 15;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-.lds-ring {
-    display: inline-block;
-    position: relative;
-    width: 80px;
-    height: 80px;
+.loading > div {
+	width: 3vw;
+	height: 3vw;
+	border-radius: 100%;
+	margin: 2vw;
+	background-image: linear-gradient(145deg, rgba(255,255,255,0.5) 0%, rgba(0,0,0,0) 100%);
+	animation: bounce 1.5s 0.5s linear infinite;
 }
-.lds-ring div {
-    box-sizing: border-box;
-    display: block;
-    position: absolute;
-    width: 64px;
-    height: 64px;
-    margin: 8px;
-    border: 8px solid var(--clr-primary);
-    border-radius: 50%;
-    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: #fff transparent transparent transparent;
+
+.yellow {
+	background-color: var(--yellow);
 }
-.lds-ring div:nth-child(1) {
-    animation-delay: -0.45s;
+
+.red {
+	background-color: var(--red);
+	animation-delay: 0.1s;
 }
-.lds-ring div:nth-child(2) {
-    animation-delay: -0.3s;
+
+.blue {
+	background-color: var(--blue);
+	animation-delay: 0.2s;
 }
-.lds-ring div:nth-child(3) {
-    animation-delay: -0.15s;
+
+.violet {
+	background-color: var(--violet);
+	animation-delay: 0.3s;
 }
-@keyframes lds-ring {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+
+@keyframes bounce {
+	0%, 50%, 100% {
+		transform: scale(1);
+		filter: blur(0px);
+	}
+	25% {
+		transform: scale(0.6);
+		filter: blur(3px);
+	}
+	75% {
+		filter: blur(3px);
+		transform: scale(1.4);
+	}
 }
 
 footer {
@@ -385,7 +403,7 @@ footer {
     clear: both;
     position: relative;
     width: 100%;
-    padding: 10px 0;
+    padding: 20px 0;
     text-align: center;
     background-color: #f5f5f5;
     color: #111;

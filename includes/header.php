@@ -14,8 +14,12 @@
     <link rel="stylesheet" href="app/css/about.css">
 </head>
 <body>
+
     <div class="loading">
-        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+        <div class="yellow"></div>
+        <div class="red"></div>
+        <div class="blue"></div>
+        <div class="violet"></div>
     </div>
     <header>
         <div class="header-logo">

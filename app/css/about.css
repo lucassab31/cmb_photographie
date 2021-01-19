@@ -31,6 +31,7 @@
 }
 
 .about-image img {
+    border: 2px solid white;
     width: 220px;
     border-radius: 50%;
     -webkit-border-radius: 50%;
