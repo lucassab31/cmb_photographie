@@ -25,3 +25,13 @@ allItems = document.getElementsByClassName("item");
 for(x=0;x<allItems.length;x++){
     imagesLoaded( allItems[x], resizeInstance);
 }
+
+function showDesc(desc) {
+    active = document.getElementsByClassName("clicked")[0];
+    if (active != undefined) {
+        active.classList.toggle("clicked");
+    }
+    if (active != desc) {
+        desc.classList.toggle("clicked");
+    }
+}

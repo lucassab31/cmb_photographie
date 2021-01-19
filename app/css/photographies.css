@@ -101,4 +101,14 @@
     .grid {
         width: 97%
     }
+
+    .grid .clicked .content .content-overlay{
+        opacity: 1;
+    }
+
+    .grid .clicked .content .content-details{
+        top: 50%;
+        left: 50%;
+        opacity: 1;
+    }
 }

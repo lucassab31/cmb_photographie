@@ -15,7 +15,7 @@
     </div>
 
     <div class="grid">
-            <div class="item">
+            <div class="item" onclick="showDesc(this)">
                 <div class="content">
                     <div class="content-overlay"></div>
                     <img src="img/1.jpg" alt="img1">
@@ -26,7 +26,7 @@
                     </div>
                 </div>
             </div>
-            <div class="item">
+            <div class="item" onclick="showDesc(this)">
                 <div class="content">
                     <div class="content-overlay"></div>
                     <img src="img/2.jpg" alt="img2">
@@ -36,7 +36,7 @@
                     </div>
                 </div>
             </div>
-            <div class="item">
+            <div class="item" onclick="showDesc(this)">
                 <div class="content">
                     <div class="content-overlay"></div>
                     <img src="img/3.jpg" alt="img3">
@@ -46,7 +46,7 @@
                     </div>
                 </div>
             </div>
-            <div class="item">
+            <div class="item" onclick="showDesc(this)">
                 <div class="content">
                     <div class="content-overlay"></div>
                     <img src="img/4.jpg" alt="img4">
@@ -56,7 +56,7 @@
                     </div>
                 </div>
             </div>
-            <div class="item">
+            <div class="item" onclick="showDesc(this)">
                 <div class="content">
                     <div class="content-overlay"></div>
                     <img src="img/5.jpg" alt="img5">
@@ -66,7 +66,7 @@
                     </div>
                 </div>
             </div>
-            <div class="item">
+            <div class="item" onclick="showDesc(this)">
                 <div class="content">
                     <div class="content-overlay"></div>
                     <img src="img/6.jpg" alt="img6">
