@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" ontouchmove>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="app/css/feedbacks.css">
     <link rel="stylesheet" href="app/css/prestations.css">
     <link rel="stylesheet" href="app/css/about.css">
+    <link rel="stylesheet" href="app/css/contact.css">
 </head>
 <body>
 
@@ -51,7 +52,7 @@
                     <a href="about.php">a propos</a>
                 </div>
                 <div class="link">
-                    <a href="#">contact</a>
+                    <a href="contact.php">contact</a>
                 </div>
             </div>
             <div class="nav-footer">
@@ -63,7 +64,6 @@
                     </a>
                 </div>
             </div>
-            
         </nav>
     </header>
     <script src="app/js/app.js"></script>

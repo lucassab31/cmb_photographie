@@ -1,4 +1,4 @@
 /node_modules
 package-lock.json
-includes/db.php
+app/php/db.php
 img/*
