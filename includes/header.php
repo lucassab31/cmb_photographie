@@ -1,3 +1,6 @@
+<?php
+    require_once('app/php/db.php');
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>

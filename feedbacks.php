@@ -10,103 +10,84 @@
     </div>
 
     <div class="page-selector" id="selector">
-        <button id="avis" onclick="activateBtn('avis')" class="active">Avis</button>
-        <button id="questions" onclick="activateBtn('questions')">Questions</button>
+        <a href="?" class="<?= !isset($_GET['action']) ? "active" : "" ?>">Avis</a>
+        <a href="?action=questions" class="<?= (isset($_GET['action']) && $_GET['action'] == "questions") ? "active" : "" ?>">Questions</a>
     </div>
 
-    <section class="avis">
-        <div class="item">
-            <div class="item-header">
-                <div class="item-title">Lucas Sabathé</div>
-                <div class="item-note">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="far fa-star"></i>
-                    <i class="far fa-star"></i>
-                </div>
-            </div>
-            <div class="item-content">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi voluptatibus aspernatur fugit consectetur molestias nulla animi similique repellat distinctio sapiente expedita deleniti dignissimos vel quas recusandae asperiores, ad, iure veniam?
-            </div>
-        </div>
-        <div class="item">
-            <div class="item-header">
-                <div class="item-title">Lucas Sabathé</div>
-                <div class="item-note">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="far fa-star"></i>
-                    <i class="far fa-star"></i>
-                </div>
-            </div>
-            <div class="item-content">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi voluptatibus aspernatur fugit consectetur molestias nulla animi similique repellat distinctio sapiente expedita deleniti dignissimos vel quas recusandae asperiores, ad, iure veniam?
-            </div>
-        </div>
-        <div class="item">
-            <div class="item-header">
-                <div class="item-title">Lucas Sabathé</div>
-                <div class="item-note">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="far fa-star"></i>
-                    <i class="far fa-star"></i>
-                </div>
-            </div>
-            <div class="item-content">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi voluptatibus aspernatur fugit consectetur molestias nulla animi similique repellat distinctio sapiente expedita deleniti dignissimos vel quas recusandae asperiores, ad, iure veniam?
-            </div>
-        </div>
-        <div class="item">
-            <div class="item-header">
-                <div class="item-title">Lucas Sabathé</div>
-                <div class="item-note">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="far fa-star"></i>
-                    <i class="far fa-star"></i>
-                </div>
-            </div>
-            <div class="item-content">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi voluptatibus aspernatur fugit consectetur molestias nulla animi similique repellat distinctio sapiente expedita deleniti dignissimos vel quas recusandae asperiores, ad, iure veniam?
-            </div>
-        </div>
-    </section>
-
-    <section class="questions">
-        <div class="item">
-            <div class="item-header">
-                <div class="item-title center">Lucas Sabathé</div>
-            </div>
-            <div class="item-content">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate unde tempora debitis placeat soluta, provident autem necessitatibus, doloribus perferendis veniam eum quod incidunt dolore architecto repellat repudiandae? Veritatis, libero necessitatibus!
-            </div>
-            <div class="item-header not-rounded">
-                <div class="item-title center">CMB_Photographie</div>
-            </div>
-            <div class="item-content">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus, odio quidem! Earum adipisci aliquid fugiat dolorem nobis aperiam omnis nulla architecto cum suscipit reprehenderit, tempore in expedita autem tenetur vel.
-            </div>
-        </div>
-        <div class="item">
-            <div class="item-header">
-                <div class="item-title center">Lucas Sabathé</div>
-            </div>
-            <div class="item-content">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate unde tempora debitis placeat soluta, provident autem necessitatibus, doloribus perferendis veniam eum quod incidunt dolore architecto repellat repudiandae? Veritatis, libero necessitatibus!
-            </div>
-            <div class="item-header not-rounded">
-                <div class="item-title center">CMB_Photographie</div>
-            </div>
-            <div class="item-content">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus, odio quidem! Earum adipisci aliquid fugiat dolorem nobis aperiam omnis nulla architecto cum suscipit reprehenderit, tempore in expedita autem tenetur vel.
-            </div>
-        </div>
-    </section>
+    
+    <?php
+        if (isset($_GET['action']) && !empty($_GET['action'])) {
+            if ($_GET['action'] == "questions") {
+                $selectQ = bddSelectId($bdd, "questions", "visible", "1");
+                ?>
+                <section class="questions">
+                    <?php
+                    if ($selectQ->rowCount() > 0) {
+                        while ($data = $selectQ->fetch()) {
+                            ?>
+                            <div class="item">
+                                <div class="item-header">
+                                    <div class="item-title center"><?= $data['prenom'] . " " . $data['nom'] ?></div>
+                                </div>
+                                <div class="item-content">
+                                    <?= $data['question'] ?>
+                                </div>
+                                <div class="item-header not-rounded">
+                                    <div class="item-title center">CMB_Photographie</div>
+                                </div>
+                                <div class="item-content">
+                                    <?= $data['reponse'] ?>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                    } else {
+                        echo '<p class="erreur">Aucune question trouvée ...</p>';
+                    }
+                        
+                    ?>
+                </section>
+                <?php
+            } else {
+                header('Location: feedbacks.php');
+            }
+        } else {
+            $selectA = bddSelectId($bdd, "avis", "visible", "1");
+            ?>
+            <section class="avis">
+                <?php
+                    if ($selectA->rowCount() > 0) {
+                        while ($data = $selectA->fetch()) {
+                            ?>
+                            <div class="item">
+                                <div class="item-header">
+                                    <div class="item-title"><?= $data['prenom'] . " " . $data['nom'] ?></div>
+                                    <div class="item-note">
+                                        <?php
+                                            for ($i=0; $i<$data['note']; $i++) {
+                                                ?><i class="fas fa-star"></i><?php
+                                            }
+                                            for ($i=0; $i<(5-$data['note']); $i++) {
+                                                ?><i class="far fa-star"></i><?php
+                                            }
+                                        ?>
+                                    </div>
+                                </div>
+                                <div class="item-content">
+                                    <?= $data['commentaire'] ?>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                    } else {
+                        echo '<p class="erreur">Aucun avis trouvé ...</p>';
+                    }
+                ?>
+            </section>
+            <?php
+        }
+    ?>
+    
 </main>
 
 <!-- FOOTER -->

@@ -1,9 +1,9 @@
-<?php session_start();
+<?php
     require_once('../app/php/db.php');
 
     // verification de l'authentification de l'utilisateur
     if (isset($_SESSION['CID'])) {
-        header('Location: manage.php?action=dashboard');
+        header('Location: manage.php?page=dashboard');
     }
 ?>
 <!DOCTYPE html>

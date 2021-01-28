@@ -16,6 +16,7 @@
     padding: 0;
     box-sizing: border-box;
     text-decoration: none;
+    font-family: 'Rubik', Helvetica, sans-serif;
 }
 
 html, body, main {
@@ -230,7 +231,7 @@ nav .nav-footer {
     margin: 20px 0;
 }
 
-.page-selector button {
+.page-selector a {
     border: none;
     color: white;
     padding: 8px 32px;
@@ -253,8 +254,7 @@ nav .nav-footer {
     -o-transition: 200ms;
 }
 
-.page-selector button:hover,
-.page-selector button:focus {
+.page-selector a:hover {
   box-shadow: 0 0.5em 0.5em -0.4em white;
   transform: translateY(-0.25em);
   outline: none;
@@ -294,6 +294,11 @@ nav .nav-footer {
     to {
         opacity:1;
     }
+}
+
+.erreur {
+    margin: 30px;
+    color: #ffffff;
 }
 
 /* SOCIALS */
