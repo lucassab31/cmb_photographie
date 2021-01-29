@@ -417,6 +417,16 @@ form select{
     -o-border-radius: 5px;
 }
 
+form .image {
+    text-align: center;
+}
+
+form .title {
+    text-align: center;
+    font-size: 1.2rem;
+    margin: 0 0 10px;
+}
+
 i {
     color: white;
     padding: 5px;
@@ -490,7 +500,7 @@ i:hover {
     color: #111;
 }
 
-.photos {
+section {
     width: 90%;
     margin: 50px auto;
 }

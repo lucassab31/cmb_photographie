@@ -46,7 +46,7 @@
                     <a href="photographies.php">photographies</a>
                 </div>
                 <div class="link">
-                    <a href="feedbacks.php">avis & questions</a>
+                    <a href="feedbacks.php?page=avis">avis & questions</a>
                 </div>
                 <div class="link">
                     <a href="prestations.php">prestations</a>
@@ -57,6 +57,15 @@
                 <div class="link">
                     <a href="contact.php">contact</a>
                 </div>
+                <?php
+                    if (isset($_SESSION['CID'])) {
+                        ?>
+                        <div class="link">
+                            <a href="gestion/">admin</a>
+                        </div>
+                        <?php
+                    }
+                ?>
             </div>
             <div class="nav-footer">
                 <div class="socials">

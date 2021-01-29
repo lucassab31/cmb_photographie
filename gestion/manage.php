@@ -44,7 +44,10 @@
                     <a href="manage.php?page=photos"><i class="fas fa-images"></i> Photographies</a>
                 </div>
                 <div class="link <?= $_GET['page'] == "feedbacks" ? "active" : "" ?>">
-                    <a href="manage.php?page=feedbacks"><i class="fas fa-comments"></i> Avis & Questions</a>
+                    <a href="manage.php?page=feedbacks"><i class="fas fa-comment-dots"></i></i> Avis</a>
+                </div>
+                <div class="link <?= $_GET['page'] == "questions" ? "active" : "" ?>">
+                    <a href="manage.php?page=questions"><i class="fas fa-comments"></i> Questions</a>
                 </div>
                 <div class="link <?= $_GET['page'] == "prestations" ? "active" : "" ?>">
                     <a href="manage.php?page=prestations"><i class="fas fa-tags"></i> Prestations</a>
@@ -88,9 +91,9 @@
                                                     WHERE valide = 0
                                                 ) as nbContacts,
                                                 ( -- nombre de visite aujourd hui
-                                                    SELECT COUNT(*)
+                                                    SELECT SUM(nombre)
                                                     FROM visits
-                                                    WHERE dateV = :dateAUJD
+                                                    WHERE dateVisit = :dateAUJD
                                                 ) as nbVisit
                     ');
                     $select->execute(array(':dateAUJD' => $date));
@@ -104,13 +107,13 @@
                             </a>
                         </div>
                         <div class="dashboard-item">
-                            <a href="?page=feedbacks">
+                            <a href="?page=feedbacks&action=validation">
                                 <div class="dashboard-title">Avis en attente</div>
                                 <div class="dashboard-number"><?= isset($data['nbAvis']) ? $data['nbAvis'] : "0" ?></div>
                             </a>
                         </div>
                         <div class="dashboard-item">
-                            <a href="?page=feedbacks">
+                            <a href="?page=questions&action=validation">
                                 <div class="dashboard-title">Question en attente</div>
                                 <div class="dashboard-number"><?= isset($data['nbQuestions']) ? $data['nbQuestions'] : "0" ?></div>
                             </a>
@@ -131,6 +134,9 @@
                     <?php
                 }
                 else if ($_GET['page'] == "photos") {
+                    $table = "photos";
+                    $nameId = "idPhoto";
+                    $location = "photos";
                     ?>
                     <section class="photos">
                         <div class="page-title">
@@ -141,14 +147,18 @@
                                 if (isset($_GET['id']) && !empty($_GET['id'])) {
                                     $id = $_GET['id'];
                                     if ($_GET['action'] == "details") {
-                                        $data = bddSelectId($bdd, "photos", "idPhoto", $id)->fetch();
+                                        $data = bddSelectId($bdd, $table, $nameId, $id)->fetch();
                                         ?>
+                                        <a href="?page=<?= $location ?>"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
                                         <?php
                                     }
                                     if ($_GET['action'] == "modify") {
-                                        $data = bddSelectId($bdd, "photos", "idPhoto", $id)->fetch();
+                                        $data = bddSelectId($bdd, $table, $nameId, $id)->fetch();
                                         ?>
                                         <form method="post" enctype="multipart/form-data">
+                                            <div class="title">
+                                                <h1>Modification d'une photo</h1>
+                                            </div>
                                             <input type="text" name="titre" placeholder="Titre" value="<?= $data['titre'] ?>">
                                             <input type="text" name="lieu" placeholder="Lieu" value="<?= $data['lieu'] ?>">
                                             <textarea name="description" placeholder="Description"><?= $data['description'] ?></textarea>
@@ -159,14 +169,14 @@
                                                 <option value="Personnelle">Personnelle</option>
                                             </select>
                                             <input type="file" name="photo">
-                                            <img src="../<?= $data['chemin'] ?>" alt="<?= $data['titre'] ?>" height="50">
+                                            <div class="image"><img src="../<?= $data['chemin'] ?>" alt="<?= $data['titre'] ?>" height="50"></div>
                                             <input type="submit" name="submitM" value="Modifier">
                                         </form>
-                                        <a href="?page=photos"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
+                                        <a href="?page=<?= $location ?>"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
                                         <?php
                                         if (isset($_POST['submitM'])) {
                                             $newData = array("titre"=>$_POST['titre'], "lieu"=>$_POST['lieu'], "description"=>$_POST['description'], "type"=>$_POST['type'],"datePhoto"=>$_POST['datePhoto']);
-                                            bddUpdate($bdd, "photos", $newData, "idPhoto", $id);
+                                            bddUpdate($bdd, $table, $newData, $nameId, $id);
 
                                             if(!empty($_FILES['photo']['name'])){
                                                 unlink("../" . $data['chemin']);
@@ -199,32 +209,37 @@
                             
                                                     if ($image_src !== false)
                                                     {
-                                                        $data = bddSelectId($bdd, "photos", "idPhoto", $id)->fetch();
+                                                        $data = bddSelectId($bdd, $table, $nameId, $id)->fetch();
                                                         $path = 'img/' . sha1($id . reset($image)) . '.jpg';
-                                                        bddUpdate($bdd, "photos", array("chemin"=>$path), "idPhoto", $id);
+                                                        bddUpdate($bdd, $table, array("chemin"=>$path), $nameId, $id);
                                                         imagejpeg($image_src,'../'.$path);
                                                     }
                                                 }
                                             }
 
-                                            header('Location: ?page=photos');
+                                            header("Location: ?page=$location");
                                         }
                                     }
                                     if ($_GET['action'] == "unvisi") {
-                                        bddUpdate($bdd, "photos", array("visible" => "0"), "idPhoto", $id);
-                                        header('Location: ?page=photos');
+                                        bddUpdate($bdd, $table, array("visible" => "0"), $nameId, $id);
+                                        header("Location: ?page=$location");
                                     }
                                     if ($_GET['action'] == "visi") {
-                                        bddUpdate($bdd, "photos", array("visible" => "1"), "idPhoto", $id);
-                                        header('Location: ?page=photos');
+                                        bddUpdate($bdd, $table, array("visible" => "1"), $nameId, $id);
+                                        header("Location: ?page=$location");
                                     }
                                     if ($_GET['action'] == "delete") {
-                                        bddDelete($bdd, "photos", "idPhoto", $id);
-                                        header('Location: ?page=photos');
+                                        $data = bddSelectId($bdd, $table, $nameId, $id)->fetch();
+                                        unlink("../" . $data['chemin']);
+                                        bddDelete($bdd, $table, $nameId, $id);
+                                        header("Location: ?page=$location");
                                     }
                                 } else if ($_GET['action'] == "add") {
                                     ?>
                                     <form method="post" enctype="multipart/form-data">
+                                        <div class="title">
+                                            <h1>Ajout d'une photo</h1>
+                                        </div>
                                         <input type="text" name="titre" placeholder="Titre">
                                         <input type="text" name="lieu" placeholder="Lieu">
                                         <textarea name="description" placeholder="Description"></textarea>
@@ -236,7 +251,7 @@
                                         <input type="file" name="photo" required>
                                         <input type="submit" name="submitA" value="Ajouter">
                                     </form>
-                                    <a href="?page=photos"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
+                                    <a href="?page=<?= $location ?>"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
                                     <?php
                                     if (isset($_POST['submitA'])) {
                                         $insert = $bdd->prepare("INSERT INTO photos(titre, lieu, description, type, datePhoto) VALUES(?, ?, ?, ?, ?)");
@@ -271,26 +286,26 @@
 
                                             if ($image_src !== false)
                                             {
-                                                $select = $bdd->prepare("SELECT * FROM photos ORDER BY idPhoto DESC LIMIT 1");
+                                                $select = $bdd->prepare("SELECT * FROM $table ORDER BY $nameId DESC LIMIT 1");
                                                 $select->execute();
                                                 $data = $select->fetch();
                                                 $path = 'img/' . sha1($data['idPhoto'] . reset($image)) . '.jpg';
-                                                bddUpdate($bdd, "photos", array("chemin"=>$path), "idPhoto", $data['idPhoto']);
+                                                bddUpdate($bdd, $table, array("chemin"=>$path), $nameId, $data['idPhoto']);
                                                 imagejpeg($image_src,'../'.$path);
                                             }
                                         }
-                                        header('Location: ?page=photos');
+                                        header("Location: ?page=$location");
                                     }
                                 }
                             } else {
                                 ?>
                                 <div class="list">
                                     <div class="list-header">
-                                        <div class="list-title">Ajouter une photo : <a href="?page=photos&action=add"><i class="fas fa-plus fa-fw" style="background-color:green;"></i></a></div>
+                                        <div class="list-title">Ajouter une photo -> <a href="?page=photos&action=add"><i class="fas fa-plus fa-fw" style="background-color:green;"></i></a></div>
                                         <div class="list-search">
                                             <form class="search" method="post">
                                                 <input type="text" name="recherche" placeholder="Rechercher par titre">
-                                                <button type="submit"><i class="fa fa-search"></i></button>
+                                                <button name="search" type="submit"><i class="fa fa-search"></i></button>
                                             </form>
                                         </div>
                                     </div>
@@ -304,7 +319,12 @@
                                                 <th>Action</th>
                                             </tr>
                                             <?php
-                                                $select = bddSelect($bdd, "photos");
+                                                if (isset($_POST['search']) && !empty($_POST['recherche'])) {
+                                                    $select = bddSearch($bdd, $table, "titre", $_POST['recherche']);
+                                                } else {
+                                                    $select = bddSelectOrder($bdd, $table, "datePhoto");
+                                                }
+                                                
                                                 while ($data = $select->fetch()) {
                                                     ?>
                                                     <tr>
@@ -315,14 +335,14 @@
                                                         <td><?= $data['type'] ?></td>
                                                         <td><?= dateFormatage($data['datePhoto']) ?></td>
                                                         <td>
-                                                            <a href="?page=photos&action=details&id=<?= $data['idPhoto'] ?>"><i style="background-color:blue;" class="fas fa-search"></i></a>
-                                                            <a href="?page=photos&action=modify&id=<?= $data['idPhoto'] ?>"><i style="background-color:orange;" class="fas fa-pen"></i></a>
+                                                            <a href="?page=<?= $location ?>&action=details&id=<?= $data['idPhoto'] ?>"><i style="background-color:blue;" class="fas fa-search"></i></a>
+                                                            <a href="?page=<?= $location ?>&action=modify&id=<?= $data['idPhoto'] ?>"><i style="background-color:orange;" class="fas fa-pen"></i></a>
                                                             <?php if ($data['visible'] == 1) { ?>
-                                                                <a href="?page=photos&action=unvisi&id=<?= $data['idPhoto'] ?>"><i style="background-color:#0033cc;" class="fas fa-eye"></i></a> 
+                                                                <a href="?page=<?= $location ?>&action=unvisi&id=<?= $data['idPhoto'] ?>"><i style="background-color:#0033cc;" class="fas fa-eye"></i></a> 
                                                             <?php } else { ?>
-                                                                <a href="?page=photos&action=visi&id=<?= $data['idPhoto'] ?>"><i style="background-color:#668cff;" class="fas fa-eye-slash"></i></a>
+                                                                <a href="?page=<?= $location ?>&action=visi&id=<?= $data['idPhoto'] ?>"><i style="background-color:#668cff;" class="fas fa-eye-slash"></i></a>
                                                             <?php } ?>
-                                                            <a href="?page=photos&action=delete&id=<?= $data['idPhoto'] ?>" onclick="Supp(this.href); return(false)"><i style="background-color:red;" class="fas fa-times"></i></a>
+                                                            <a href="?page=<?= $location ?>&action=delete&id=<?= $data['idPhoto'] ?>" onclick="Supp(this.href); return(false)"><i style="background-color:red;" class="fas fa-times"></i></a>
                                                         </td>
                                                     </tr>
                                                     <?php
@@ -336,15 +356,472 @@
                                 <?php
                             }
                         ?>
-                        
                     </section>
                     <?php
                 }
                 else if ($_GET['page'] == "feedbacks") {
-                    
+                    $table = "avis";
+                    $nameId = "idAvis";
+                    $location = "feedbacks";
+                    ?>
+                    <section class="feedbacks">
+                        <div class="page-title">
+                            <h1>Avis</h1>
+                        </div>
+                        <?php
+                            if (isset($_GET['action']) && !empty($_GET['action'])) {
+                                if (isset($_GET['id']) && !empty($_GET['id'])) {
+                                    $id = $_GET['id'];
+                                    if ($_GET['action'] == "details") {
+                                        $data = bddSelectId($bdd, $table, $nameId, $id)->fetch();
+                                        ?>
+                                        <a href="?page=<?= $location ?>"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
+                                        <?php
+                                    }
+                                    if ($_GET['action'] == "modify") {
+                                        $data = bddSelectId($bdd, $table, $nameId, $id)->fetch();
+                                        ?>
+                                        <form method="post">
+                                            <div class="title">
+                                                <h1>Modification d'un avis</h1>
+                                            </div>
+                                            <input type="text" name="nom" placeholder="Nom" value="<?= $data['nom'] ?>">
+                                            <input type="text" name="prenom" placeholder="Prenom" value="<?= $data['prenom'] ?>" required>
+                                            <input type="number" max="5" name="note" placeholder="Note" value="<?= $data['note'] ?>" required>
+                                            <textarea name="commentaire" placeholder="Commentaire"><?= $data['commentaire'] ?></textarea>
+                                            <input type="submit" name="submitA" value="Modifier">
+                                        </form>
+                                        <a href="?page=<?= $location ?>"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
+                                        <?php
+                                        if (isset($_POST['submitA'])) {
+                                            $newData = array("nom"=>$_POST['nom'], "prenom"=>$_POST['prenom'], "note"=>$_POST['note'], "commentaire"=>$_POST['commentaire']);
+                                            bddUpdate($bdd, $table, $newData, $nameId, $id);
+                                            header("Location: ?page=$location");
+                                        }
+                                    }
+                                    if ($_GET['action'] == "unvisi") {
+                                        bddUpdate($bdd, $table, array("visible" => "0"), $nameId, $id);
+                                        header("Location: ?page=$location");
+                                    }
+                                    if ($_GET['action'] == "visi") {
+                                        bddUpdate($bdd, $table, array("visible" => "1"), $nameId, $id);
+                                        header("Location: ?page=$location");
+                                    }
+                                    if ($_GET['action'] == "delete") {
+                                        bddDelete($bdd, $table, $nameId, $id);
+                                        header("Location: ?page=$location");
+                                    }
+                                } else if ($_GET['action'] == "validation") {
+                                    ?>
+                                    <div class="list-title">Attente de validation</div>
+                                        <table>
+                                            <tr>
+                                                <th>Nom & Prénom</th>
+                                                <th>Note</th>
+                                                <th>Commentaire</th>
+                                                <th>Date</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            <?php
+                                                $select = $bdd->prepare("SELECT * FROM $table WHERE valide = '0' ORDER BY dateAvis DESC");
+                                                $select->execute();
+                                                
+                                                while ($data = $select->fetch()) {
+                                                    ?>
+                                                    <tr>
+                                                        <td><?= $data['nom'] . " " . $data['prenom'] ?></td>
+                                                        <td>
+                                                            <?php
+                                                                for ($i=0; $i<$data['note']; $i++) {
+                                                                    ?><i style="color:#0700D0;" class="fas fa-star"></i><?php
+                                                                }
+                                                                for ($i=0; $i<(5-$data['note']); $i++) {
+                                                                    ?><i style="color:#0700D0;" class="far fa-star"></i><?php
+                                                                }
+                                                            ?>
+                                                        </td>
+                                                        <td><?= $data['commentaire'] ?></td>
+                                                        <td><?= dateFormatage($data['dateAvis']) ?></td>
+                                                        <td>
+                                                            <a href="?page=<?= $location ?>&action=validation&sub=valide&idsb=<?= $data['idAvis'] ?>"><i style="background-color:green;" class="fas fa-check"></i></a> 
+                                                            <a href="?page=<?= $location ?>&action=validation&sub=unvalide&idsb=<?= $data['idAvis'] ?>" onclick="Supp(this.href); return(false)"><i style="background-color:red;" class="fas fa-times"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                    if (isset($_GET['sub']) && !empty($_GET['sub'])) {
+                                                        if (isset($_GET['idsb']) && !empty($_GET['idsb'])) {
+                                                            $id = $_GET['idsb'];
+                                                            if ($_GET['sub'] == "valide") {
+                                                                bddUpdate($bdd, $table, array("valide" => "1", "visible"=>"1"), $nameId, $id);
+                                                                header("Location: ?page=$location&action=validation");
+                                                            } else if ($_GET['sub'] == "unvalide") {
+                                                                bddDelete($bdd, $table, $nameId, $id);
+                                                                header("Location: ?page=$location&action=validation");
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                                
+                                            ?>
+                                        </table>
+                                        <a href="?page=<?= $location ?>"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
+                                    <?php
+                                }
+                            } else {
+                                ?>
+                                <div class="list">
+                                    <div class="list-header">
+                                        <div class="list-title">Avis en attente de validation -> <a href="?page=<?= $location ?>&action=validation"><i class="fas fa-check-circle" style="background-color:green;"></i></a></div>
+                                        <div class="list-search">
+                                            <form class="search" method="post">
+                                                <input type="text" name="recherche" placeholder="Rechercher par prénom">
+                                                <button name="search" type="submit"><i class="fa fa-search"></i></button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="list-content">
+                                        <table>
+                                            <tr>
+                                                <th>Nom & Prénom</th>
+                                                <th>Note</th>
+                                                <th>Date</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            <?php
+                                                if (isset($_POST['search']) && !empty($_POST['recherche'])) {
+                                                    $select = bddSearch($bdd, $table, "prenom", $_POST['recherche']);
+                                                } else {
+                                                    $select = $bdd->prepare("SELECT * FROM $table WHERE valide = '1' ORDER BY dateAvis DESC");
+                                                    $select->execute();
+                                                }
+                                                
+                                                while ($data = $select->fetch()) {
+                                                    ?>
+                                                    <tr>
+                                                        <td><?= $data['nom'] . " " . $data['prenom'] ?></td>
+                                                        <td>
+                                                            <?php
+                                                                for ($i=0; $i<$data['note']; $i++) {
+                                                                    ?><i style="color:#0700D0;" class="fas fa-star"></i><?php
+                                                                }
+                                                                for ($i=0; $i<(5-$data['note']); $i++) {
+                                                                    ?><i style="color:#0700D0;" class="far fa-star"></i><?php
+                                                                }
+                                                            ?>
+                                                        </td>
+                                                        <td><?= dateFormatage($data['dateAvis']) ?></td>
+                                                        <td>
+                                                            <a href="?page=<?= $location ?>&action=details&id=<?= $data['idAvis'] ?>"><i style="background-color:blue;" class="fas fa-search"></i></a>
+                                                            <a href="?page=<?= $location ?>&action=modify&id=<?= $data['idAvis'] ?>"><i style="background-color:orange;" class="fas fa-pen"></i></a>
+                                                            <?php if ($data['visible'] == 1) { ?>
+                                                                <a href="?page=<?= $location ?>&action=unvisi&id=<?= $data['idAvis'] ?>"><i style="background-color:#0033cc;" class="fas fa-eye"></i></a> 
+                                                            <?php } else { ?>
+                                                                <a href="?page=<?= $location ?>&action=visi&id=<?= $data['idAvis'] ?>"><i style="background-color:#668cff;" class="fas fa-eye-slash"></i></a>
+                                                            <?php } ?>
+                                                            <a href="?page=<?= $location ?>&action=delete&id=<?= $data['idAvis'] ?>" onclick="Supp(this.href); return(false)"><i style="background-color:red;" class="fas fa-times"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                    
+                                                }
+                                            ?>
+                                            
+                                        </table>
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                        ?>
+                    </section>
+                    <?php
+                }
+                else if ($_GET['page'] == "questions") {
+                    $table = "questions";
+                    $nameId = "idQuestion";
+                    $location = "questions";
+                    ?>
+                    <section class="questions">
+                        <div class="page-title">
+                            <h1>Questions</h1>
+                        </div>
+                        <?php
+                            if (isset($_GET['action']) && !empty($_GET['action'])) {
+                                if (isset($_GET['id']) && !empty($_GET['id'])) {
+                                    $id = $_GET['id'];
+                                    if ($_GET['action'] == "details") {
+                                        $data = bddSelectId($bdd, $table, $nameId, $id)->fetch();
+                                        ?>
+                                        <a href="?page=<?= $location ?>"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
+                                        <?php
+                                    }
+                                    if ($_GET['action'] == "modify") {
+                                        $data = bddSelectId($bdd, $table, $nameId, $id)->fetch();
+                                        ?>
+                                        <form method="post">
+                                            <div class="title">
+                                                <h1>Modification d'une question</h1>
+                                            </div>
+                                            <input type="text" name="nom" placeholder="Nom" value="<?= $data['nom'] ?>">
+                                            <input type="text" name="prenom" placeholder="Prenom" value="<?= $data['prenom'] ?>">
+                                            <textarea name="question" placeholder="Question"><?= $data['question'] ?></textarea>
+                                            <textarea name="reponse" placeholder="Réponse"><?= $data['reponse'] ?></textarea>
+                                            <input type="submit" name="submitQ" value="Modifier">
+                                        </form>
+                                        <a href="?page=<?= $location ?>"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
+                                        <?php
+                                        if (isset($_POST['submitQ'])) {
+                                            $newData = array("nom"=>$_POST['nom'], "prenom"=>$_POST['prenom'], "question"=>$_POST['question'], "reponse"=>$_POST['reponse']);
+                                            bddUpdate($bdd, $table, $newData, $nameId, $id);
+                                            header("Location: ?page=$location");
+                                        }
+                                    }
+                                    if ($_GET['action'] == "unvisi") {
+                                        bddUpdate($bdd, $table, array("visible" => "0"), $nameId, $id);
+                                        header("Location: ?page=$location");
+                                    }
+                                    if ($_GET['action'] == "visi") {
+                                        bddUpdate($bdd, $table, array("visible" => "1"), $nameId, $id);
+                                        header("Location: ?page=$location");
+                                    }
+                                    if ($_GET['action'] == "delete") {
+                                        bddDelete($bdd, $table, $nameId, $id);
+                                        header("Location: ?page=$location");
+                                    }
+                                } else if ($_GET['action'] == "validation") {
+                                    ?>
+                                    <div class="list-title">Attente de validation</div>
+                                    <table>
+                                            <tr>
+                                                <th>Nom & Prénom</th>
+                                                <th>Question</th>
+                                                <th>Date</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            <?php
+                                                $select = $bdd->prepare("SELECT * FROM $table WHERE valide = '0' ORDER BY dateQuestion DESC");
+                                                $select->execute();
+                                                
+                                                while ($data = $select->fetch()) {
+                                                    ?>
+                                                    <tr>
+                                                        <td><?= $data['nom'] . " " . $data['prenom'] ?></td>
+                                                        <td><?= $data['question'] ?></td>
+                                                        <td><?= dateFormatage($data['dateQuestion']) ?></td>
+                                                        <td>
+                                                            <a href="?page=<?= $location ?>&action=validation&sub=valide&idsb=<?= $data['idQuestion'] ?>"><i style="background-color:green;" class="fas fa-check"></i></a> 
+                                                            <a href="?page=<?= $location ?>&action=validation&sub=unvalide&idsb=<?= $data['idQuestion'] ?>" onclick="Supp(this.href); return(false)"><i style="background-color:red;" class="fas fa-times"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                    if (isset($_GET['sub']) && !empty($_GET['sub'])) {
+                                                        if (isset($_GET['idsb']) && !empty($_GET['idsb'])) {
+                                                            $id = $_GET['idsb'];
+                                                            if ($_GET['sub'] == "valide") {
+                                                                bddUpdate($bdd, $table, array("valide" => "1"), $nameId, $id);
+                                                                header("Location: ?page=$location&action=validation");
+                                                            } else if ($_GET['sub'] == "unvalide") {
+                                                                bddDelete($bdd, $table, $nameId, $id);
+                                                                header("Location: ?page=$location&action=validation");
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                                
+                                            ?>
+                                        </table>
+                                    <a href="?page=<?= $location ?>"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
+                                    <?php
+                                }
+                            } else {
+                                ?>
+                                <div class="list">
+                                    <div class="list-header">
+                                        <div class="list-title">Questions en attente de validation -> <a href="?page=<?= $location ?>&action=validation"><i class="fas fa-check-circle" style="background-color:green;"></i></a></div>
+                                        <div class="list-search">
+                                            <form class="search" method="post">
+                                                <input type="text" name="recherche" placeholder="Rechercher par prénom">
+                                                <button name="search" type="submit"><i class="fa fa-search"></i></button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="list-content">
+                                        <table>
+                                            <tr>
+                                                <th>Nom & Prénom</th>
+                                                <th>Question</th>
+                                                <th>Date</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            <?php
+                                                if (isset($_POST['search']) && !empty($_POST['recherche'])) {
+                                                    $select = bddSearch($bdd, $table, "prenom", $_POST['recherche']);
+                                                } else {
+                                                    $select = $bdd->prepare("SELECT * FROM $table WHERE valide = '1' ORDER BY dateQuestion DESC");
+                                                    $select->execute();
+                                                }
+                                                
+                                                while ($data = $select->fetch()) {
+                                                    ?>
+                                                    <tr>
+                                                        <td><?= $data['nom'] . " " . $data['prenom'] ?></td>
+                                                        <td><?= $data['question'] ?></td>
+                                                        <td><?= dateFormatage($data['dateQuestion']) ?></td>
+                                                        <td>
+                                                            <a href="?page=<?= $location ?>&action=details&id=<?= $data['idQuestion'] ?>"><i style="background-color:blue;" class="fas fa-search"></i></a>
+                                                            <a href="?page=<?= $location ?>&action=modify&id=<?= $data['idQuestion'] ?>"><i style="background-color:orange;" class="fas fa-pen"></i></a>
+                                                            <?php if ($data['visible'] == 1) { ?>
+                                                                <a href="?page=<?= $location ?>&action=unvisi&id=<?= $data['idQuestion'] ?>"><i style="background-color:#0033cc;" class="fas fa-eye"></i></a> 
+                                                            <?php } else { ?>
+                                                                <a href="?page=<?= $location ?>&action=visi&id=<?= $data['idQuestion'] ?>"><i style="background-color:#668cff;" class="fas fa-eye-slash"></i></a>
+                                                            <?php } ?>
+                                                            <a href="?page=<?= $location ?>&action=delete&id=<?= $data['idQuestion'] ?>" onclick="Supp(this.href); return(false)"><i style="background-color:red;" class="fas fa-times"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                    
+                                                }
+                                            ?>
+                                            
+                                        </table>
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                        ?>
+                    </section>
+                    <?php
                 }
                 else if ($_GET['page'] == "prestations") {
-
+                    $table = "prestations";
+                    $nameId = "idPrestation";
+                    $location = "prestations";
+                    ?>
+                    <section class="questions">
+                        <div class="page-title">
+                            <h1>Prestations</h1>
+                        </div>
+                        <?php
+                            if (isset($_GET['action']) && !empty($_GET['action'])) {
+                                if (isset($_GET['id']) && !empty($_GET['id'])) {
+                                    $id = $_GET['id'];
+                                    if ($_GET['action'] == "details") {
+                                        $data = bddSelectId($bdd, $table, $nameId, $id)->fetch();
+                                        ?>
+                                        <a href="?page=<?= $location ?>"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
+                                        <?php
+                                    }
+                                    if ($_GET['action'] == "modify") {
+                                        $data = bddSelectId($bdd, $table, $nameId, $id)->fetch();
+                                        ?>
+                                        <form method="post">
+                                            <div class="title">
+                                                <h1>Modification d'une prestation</h1>
+                                            </div>
+                                            <input type="text" name="titre" placeholder="Titre" value="<?= $data['titre'] ?>" required>
+                                            <input type="number" name="prix" placeholder="Prix" value="<?= $data['prix'] ?>" required>
+                                            <textarea name="description" placeholder="Description" required><?= $data['description'] ?></textarea>
+                                            <input type="number" name="ordre" placeholder="Ordre" value="<?= $data['ordre'] ?>" required>
+                                            <input type="submit" name="submitP" value="Modifier">
+                                        </form>
+                                        <a href="?page=<?= $location ?>"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
+                                        <?php
+                                        if (isset($_POST['submitP'])) {
+                                            $newData = array("titre"=>$_POST['titre'], "prix"=>$_POST['prix'], "description"=>$_POST['description'], "ordre"=>$_POST['ordre']);
+                                            bddUpdate($bdd, $table, $newData, $nameId, $id);
+                                            header("Location: ?page=$location");
+                                        }
+                                    }
+                                    if ($_GET['action'] == "unvisi") {
+                                        bddUpdate($bdd, $table, array("visible" => "0"), $nameId, $id);
+                                        header("Location: ?page=$location");
+                                    }
+                                    if ($_GET['action'] == "visi") {
+                                        bddUpdate($bdd, $table, array("visible" => "1"), $nameId, $id);
+                                        header("Location: ?page=$location");
+                                    }
+                                    if ($_GET['action'] == "delete") {
+                                        bddDelete($bdd, $table, $nameId, $id);
+                                        header("Location: ?page=$location");
+                                    }
+                                } else if ($_GET['action'] == "add") {
+                                    ?>
+                                    <form method="post">
+                                        <div class="title">
+                                            <h1>Ajout d'une prestation</h1>
+                                        </div>
+                                        <input type="text" name="titre" placeholder="Titre" required>
+                                        <input type="number" name="prix" placeholder="Prix" required>
+                                        <textarea name="description" placeholder="Description" required></textarea>
+                                        <input type="number" name="ordre" placeholder="Ordre" required>
+                                        <input type="submit" name="submitP" value="Ajouter">
+                                    </form>
+                                    <a href="?page=<?= $location ?>"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
+                                    <?php
+                                    if (isset($_POST['submitP'])) {
+                                        $insert = $bdd->prepare("INSERT INTO prestations(titre, prix, description, ordre) VALUES(?, ?, ?, ?)");
+                                        $insert->execute(array($_POST['titre'], $_POST['prix'], $_POST['description'], $_POST['ordre']));
+                                        header("Location: ?page=$location");
+                                    }
+                                }
+                            } else {
+                                ?>
+                                <div class="list">
+                                    <div class="list-header">
+                                        <div class="list-title">Ajouter une prestation -> <a href="?page=<?= $location ?>&action=add"><i class="fas fa-plus fa-fw" style="background-color:green;"></i></a></div>
+                                        <div class="list-search">
+                                            <form class="search" method="post">
+                                                <input type="text" name="recherche" placeholder="Rechercher par titre">
+                                                <button name="search" type="submit"><i class="fa fa-search"></i></button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="list-content">
+                                        <table>
+                                            <tr>
+                                                <th>Titre</th>
+                                                <th>Prix</th>
+                                                <th>Ordre</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            <?php
+                                                if (isset($_POST['search']) && !empty($_POST['recherche'])) {
+                                                    $select = bddSearch($bdd, $table, "titre", $_POST['recherche']);
+                                                } else {
+                                                    $select = bddSelectOrderR($bdd, $table, "ordre");
+                                                }
+                                                
+                                                while ($data = $select->fetch()) {
+                                                    ?>
+                                                    <tr>
+                                                        <td><?= $data['titre'] ?></td>
+                                                        <td><?= $data['prix'] ?>€</td>
+                                                        <td><?= $data['ordre'] ?></td>
+                                                        <td>
+                                                            <a href="?page=<?= $location ?>&action=details&id=<?= $data['idPrestation'] ?>"><i style="background-color:blue;" class="fas fa-search"></i></a>
+                                                            <a href="?page=<?= $location ?>&action=modify&id=<?= $data['idPrestation'] ?>"><i style="background-color:orange;" class="fas fa-pen"></i></a>
+                                                            <?php if ($data['visible'] == 1) { ?>
+                                                                <a href="?page=<?= $location ?>&action=unvisi&id=<?= $data['idPrestation'] ?>"><i style="background-color:#0033cc;" class="fas fa-eye"></i></a> 
+                                                            <?php } else { ?>
+                                                                <a href="?page=<?= $location ?>&action=visi&id=<?= $data['idPrestation'] ?>"><i style="background-color:#668cff;" class="fas fa-eye-slash"></i></a>
+                                                            <?php } ?>
+                                                            <a href="?page=<?= $location ?>&action=delete&id=<?= $data['idPrestation'] ?>" onclick="Supp(this.href); return(false)"><i style="background-color:red;" class="fas fa-times"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                    
+                                                }
+                                            ?>
+                                            
+                                        </table>
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                        ?>
+                    </section>
+                    <?php
                 }
                 else if ($_GET['page'] == "contacts") {
 

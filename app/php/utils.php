@@ -13,9 +13,30 @@
         $select->closeCursor();
     }
 
+    function bddSelectOrder($bdd, $table, $order) {
+        $select = $bdd->prepare("SELECT * FROM $table ORDER BY $order DESC");
+        $select->execute();
+        return $select;
+        $select->closeCursor();
+    }
+
+    function bddSelectOrderR($bdd, $table, $order) {
+        $select = $bdd->prepare("SELECT * FROM $table ORDER BY $order");
+        $select->execute();
+        return $select;
+        $select->closeCursor();
+    }
+
     function bddSelect($bdd, $table) {
         $select = $bdd->prepare("SELECT * FROM $table");
         $select->execute();
+        return $select;
+        $select->closeCursor();
+    }
+
+    function bddSearch($bdd, $table, $name, $search) {
+        $select = $bdd->prepare("SELECT * FROM $table WHERE $name LIKE ? LIMIT 50");
+        $select->execute(array("%$search%"));
         return $select;
         $select->closeCursor();
     }
