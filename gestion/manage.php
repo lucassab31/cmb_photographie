@@ -91,7 +91,7 @@
                                                     WHERE valide = 0
                                                 ) as nbContacts,
                                                 ( -- nombre de visite aujourd hui
-                                                    SELECT SUM(nombre)
+                                                    SELECT  MAX(nombre)
                                                     FROM visits
                                                     WHERE dateVisit = :dateAUJD
                                                 ) as nbVisit

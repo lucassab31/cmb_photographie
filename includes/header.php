@@ -1,5 +1,51 @@
 <?php
     require_once('app/php/db.php');
+
+    $path = explode("/", $_SERVER['PHP_SELF']);
+    $page = explode(".", end($path))[0];
+    switch ($page) {
+        case 'index':
+            $lettre = 'i';
+            break;
+        case 'photographies':
+            $lettre = 'p';
+            break;
+        case 'feedbacks':
+            $lettre = 'f';
+            break;
+        case 'prestations':
+            $lettre = 't';
+            break;
+        case 'about':
+            $lettre = 'a';
+            break;
+        case 'contact':
+            $lettre = 'c';
+            break;
+        
+        default:
+            break;
+    }
+    if (isset($_COOKIE['vtd']) && !empty($_COOKIE['vtd'])) {      
+        if (strpos($_COOKIE['vtd'], $lettre) === false) {
+            setcookie("vtd", $_COOKIE['vtd'] . $lettre, time()+3600*24, "/");
+            $up = true;
+        }
+    } else {
+        setcookie("vtd", $lettre, time()+3600*24, "/");
+        $up = true;
+    }
+    $date = date("Y-m-d");
+    $select = $bdd->prepare("SELECT * FROM visits WHERE dateVisit=? AND page=?");
+    $select->execute(array($date, $page));
+    if ($select->rowCount() == 0) {
+        $insert = $bdd->prepare("INSERT INTO visits(dateVisit, page, nombre) VALUES(?,?,?)");
+        $insert->execute(array($date, $page, "1"));
+    } else if (isset($up) && $up) {
+        $update = $bdd->prepare("UPDATE visits SET nombre=nombre+1 WHERE dateVisit=? AND page=?");
+        $update->execute(array($date, $page));
+        $up = false;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="fr">

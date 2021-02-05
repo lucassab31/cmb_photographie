@@ -53,11 +53,4 @@
             $update->execute(array($value));
         }
     }
-
-    // function bddInsert($bdd, $table, $data) {
-    //     foreach ($data as $column => $value) {
-    //         $insert = $bdd->prepare("INSERT INTO $table($column) VALUES(?)");
-    //         $insert->execute(array($value));
-    //     }
-    // }
 ?>

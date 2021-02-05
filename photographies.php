@@ -25,7 +25,8 @@
                     header('Location: photographies.php');
                 }
             } else {
-                $select = bddSelect($bdd, "photos");
+                $select = $bdd->prepare("SELECT * FROM photos WHERE visible='1' ORDER BY datePhoto DESC");
+                $select->execute();
             }
             if ($select->rowCount() > 0) {
                 while ($data = $select->fetch()) {
