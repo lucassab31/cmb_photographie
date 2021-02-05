@@ -71,6 +71,9 @@
     padding: 2.3rem 2.2rem;
     overflow: hidden;
     position: relative;
+    border: none;
+    margin: 0;
+    width: auto;
 }
 
 .contact-form .title {
@@ -87,7 +90,9 @@
     margin: 1rem 0;
 }
 
-.input {
+.contact-form .input {
+    margin: 0;
+    height: auto;
     width: 100%;
     outline: none;
     border: 2px solid #fafafa;
@@ -153,7 +158,7 @@
     -o-transform: translateY(0);
 }
 
-.btn-contact {
+.contact-form .btn-contact {
     padding: 0.6rem 1.3rem;
     background-color: #fff;
     border: 2px solid #fafafa;
@@ -173,11 +178,13 @@
     -ms-transition: 300ms;
     -o-transition: 300ms;
     margin: 0;
+    height: auto;
 }
 
-.btn-contact:hover {
+.contact-form .btn-contact:hover {
     background-color: transparent;
     color: #fff;
+    font-weight: initial;
 }
 
 .input-container span {
