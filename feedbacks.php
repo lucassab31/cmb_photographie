@@ -22,18 +22,44 @@
             if ($_GET['page'] == "avis") {
                 if (isset($_GET['action']) && $_GET['action'] == "add") {
                     ?>
-                    <form method="post">
+                    <div class="form-container">
                         <div class="title">
-                            <h1>Ajout d'un avis</h1>
+                            <h2>Ajouter un avis</h2>
                         </div>
-                        <input type="text" name="nom" placeholder="Nom">
-                        <input type="text" name="prenom" placeholder="Prénom" required>
-                        <input type="number" min="0" max="5" name="note" placeholder="Note/5" required>
-                        <textarea name="commentaire" placeholder="Commentaire" required></textarea>
-                        <input type="submit" name="submitA" value="Ajouter">
-                    </form>
+                        <form onsubmit="validateAvis(this); return false;" method="post" class="form" id="feedback-form" name="feedback-form" >
+                            <div class="form-control">
+                                <label for="nom">Nom :</label>
+                                <input type="text" name="nom" id="nom" placeholder="Nom">
+                                <i class="fas fa-check-circle"></i>
+                                <i class="fas fa-exclamation-circle"></i>
+                                <small>Error message</small>
+                            </div>
+                            <div class="form-control">
+                                <label for="prenom">Prénom :</label>
+                                <input type="text" name="prenom" id="prenom" placeholder="Prénom">
+                                <i class="fas fa-check-circle"></i>
+                                <i class="fas fa-exclamation-circle"></i>
+                                <small>Error message</small>
+                            </div>
+                            <div class="form-control">
+                                <label for="note">Note :</label>
+                                <input type="number" min="0" max="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" name="note" id="note" placeholder="Note/5">
+                                <i class="fas fa-check-circle"></i>
+                                <i class="fas fa-exclamation-circle"></i>
+                                <small>Error message</small>
+                            </div>
+                            <div class="form-control">
+                                <label for="commentaire">Commentaire :</label>
+                                <textarea name="commentaire" id="commentaire" placeholder="Commentaire"></textarea>
+                                <i class="fas fa-check-circle"></i>
+                                <i class="fas fa-exclamation-circle"></i>
+                                <small>Error message</small>
+                            </div>
+                            <button type="submit" name="submitF">Envoyer</button>
+                        </form>
+                    </div>
                     <?php
-                    if (isset($_POST['submitA'])) {
+                    if (isset($_POST['submitF'])) {
                         $insert = $bdd->prepare("INSERT INTO avis(nom, prenom, note, commentaire, dateAvis) VALUES(?, ?, ?, ?, ?)");
                         $insert->execute(array($_POST['nom'], $_POST['prenom'], $_POST['note'], $_POST['commentaire'], Date("Y-m-d")));
                         header("Location: ?page=avis");
@@ -77,15 +103,34 @@
             else if ($_GET['page'] == "questions") {
                 if (isset($_GET['action']) && $_GET['action'] == "add") {
                     ?>
-                    <form method="post">
+                    <div class="form-container">
                         <div class="title">
-                            <h1>Poser une question</h1>
+                            <h2>Ajouter un avis</h2>
                         </div>
-                        <input type="text" name="nom" placeholder="Nom">
-                        <input type="text" name="prenom" placeholder="Prénom" required>
-                        <textarea name="question" placeholder="Question" required></textarea>
-                        <input type="submit" name="submitQ" value="Demander">
-                    </form>
+                        <form onsubmit="validateQuestion(this); return false;" method="post" class="form" id="feedback-form" name="feedback-form" >
+                            <div class="form-control">
+                                <label for="nom">Nom :</label>
+                                <input type="text" name="nom" id="nom" placeholder="Nom">
+                                <i class="fas fa-check-circle"></i>
+                                <i class="fas fa-exclamation-circle"></i>
+                                <small>Error message</small>
+                            </div>
+                            <div class="form-control">
+                                <label for="prenom">Prénom :</label>
+                                <input type="text" name="prenom" id="prenom" placeholder="Prénom">
+                                <i class="fas fa-check-circle"></i>
+                                <i class="fas fa-exclamation-circle"></i>
+                                <small>Error message</small>
+                            </div>
+                            <div class="form-control">
+                                <label for="question">Question :</label>
+                                <textarea name="question" id="question" placeholder="Question"></textarea>
+                                <i class="fas fa-check-circle"></i>
+                                <i class="fas fa-exclamation-circle"></i>
+                                <small>Error message</small>
+                            </div>
+                            <button type="submit" name="submitQ">Envoyer</button>
+                        </form>
                     <?php
                     if (isset($_POST['submitQ'])) {
                         $insert = $bdd->prepare("INSERT INTO questions(nom, prenom, question, dateQuestion) VALUES(?, ?, ?, ?)");
@@ -134,6 +179,7 @@
     ?>
     
 </main>
+<script src="app/js/feedbacks.js"></script>
 
 <!-- FOOTER -->
 <?php
