@@ -296,7 +296,9 @@ nav .nav-footer {
     }
 }
 
-.erreur {
+.data {
+    text-align: center;
+    font-size: 1.1em;
     margin: 30px;
     color: #ffffff;
 }

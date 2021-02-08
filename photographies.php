@@ -1,7 +1,4 @@
-<!-- HEADER -->
-<?php
-    require_once('includes/header.php');
-?>
+<?php require_once('includes/header.php') ?>
 
 <!-- MAIN -->
 <main>
@@ -10,24 +7,28 @@
     </div>
     <div class="page-selector" id="selector">
         <a href="?" id="toutes" class="<?= !isset($_GET['action']) ? "active" : "" ?>">Toutes</a>
-        <a href="?action=pro" class="<?= (isset($_GET['action']) && $_GET['action'] == "pro") ? "active" : "" ?>">Professionnelles</button>
-        <a href="?action=perso" class="<?= (isset($_GET['action']) && $_GET['action'] == "perso") ? "active" : "" ?>">Personnelles</button>
+        <a href="?action=pro" class="<?= (isset($_GET['action']) && $_GET['action'] == "pro") ? "active" : "" ?>">Professionnelles</a>
+        <a href="?action=perso" class="<?= (isset($_GET['action']) && $_GET['action'] == "perso") ? "active" : "" ?>">Personnelles</a>
     </div>
 
     <div class="grid">
         <?php
             if (isset($_GET['action']) && !empty($_GET['action'])) {
                 if ($_GET['action'] == "pro") {
-                    $select = bddSelectId($bdd, "photos", "type", "Professionnelle");
+                    $type = "Professionnelle";
+                    $select = $bdd->prepare("SELECT * FROM photos WHERE visible='1' AND type=$type ORDER BY datePhoto DESC");
                 } else if ($_GET['action'] == "perso") {
-                    $select = bddSelectId($bdd, "photos", "type", "Personnelle");
+                    $type = "Personnelle";
+                    $select = $bdd->prepare("SELECT * FROM photos WHERE visible='1' AND type='Personnelle' ORDER BY datePhoto DESC");
                 } else {
                     header('Location: photographies.php');
                 }
+                $select->execute();
             } else {
                 $select = $bdd->prepare("SELECT * FROM photos WHERE visible='1' ORDER BY datePhoto DESC");
                 $select->execute();
             }
+    
             if ($select->rowCount() > 0) {
                 while ($data = $select->fetch()) {
                     ?>
@@ -49,11 +50,14 @@
                     <?php
                 }
             } else {
-                echo '<p class="erreur">Aucune photo trouvée ...</p>';
+                $erreur = '<p class="data">Aucune photo trouvée ...</p>';
             }
             
         ?>
-        </div>
+    </div>
+    <div class="data">
+        <?= isset($erreur) ? $erreur : "" ?>
+    </div>
 </main>
 <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
 <script src="app/js/grid.js"></script>

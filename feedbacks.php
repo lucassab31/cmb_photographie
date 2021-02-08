@@ -1,7 +1,4 @@
-<!-- HEADER -->
-<?php
-    require_once('includes/header.php');
-?>
+<?php require_once('includes/header.php') ?>
 
 <!-- MAIN -->
 <main>
@@ -28,28 +25,28 @@
                         </div>
                         <form onsubmit="validateAvis(this); return false;" method="post" class="form" id="feedback-form" name="feedback-form" >
                             <div class="form-control">
-                                <label for="nom">Nom :</label>
+                                <!-- <label for="nom">Nom :</label> -->
                                 <input type="text" name="nom" id="nom" placeholder="Nom">
                                 <i class="fas fa-check-circle"></i>
                                 <i class="fas fa-exclamation-circle"></i>
                                 <small>Error message</small>
                             </div>
                             <div class="form-control">
-                                <label for="prenom">Prénom :</label>
+                                <!-- <label for="prenom">Prénom :</label> -->
                                 <input type="text" name="prenom" id="prenom" placeholder="Prénom">
                                 <i class="fas fa-check-circle"></i>
                                 <i class="fas fa-exclamation-circle"></i>
                                 <small>Error message</small>
                             </div>
                             <div class="form-control">
-                                <label for="note">Note :</label>
+                                <!-- <label for="note">Note :</label> -->
                                 <input type="number" min="0" max="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" name="note" id="note" placeholder="Note/5">
                                 <i class="fas fa-check-circle"></i>
                                 <i class="fas fa-exclamation-circle"></i>
                                 <small>Error message</small>
                             </div>
                             <div class="form-control">
-                                <label for="commentaire">Commentaire :</label>
+                                <!-- <label for="commentaire">Commentaire :</label> -->
                                 <textarea name="commentaire" id="commentaire" placeholder="Commentaire"></textarea>
                                 <i class="fas fa-check-circle"></i>
                                 <i class="fas fa-exclamation-circle"></i>
@@ -93,7 +90,7 @@
                                     <?php
                                 }
                             } else {
-                                echo '<p class="erreur">Aucun avis trouvé ...</p>';
+                                echo '<p class="data">Aucun avis trouvé ...</p>';
                             }
                         ?>
                     </section>
@@ -105,25 +102,25 @@
                     ?>
                     <div class="form-container">
                         <div class="title">
-                            <h2>Ajouter un avis</h2>
+                            <h2>Poser une question</h2>
                         </div>
                         <form onsubmit="validateQuestion(this); return false;" method="post" class="form" id="feedback-form" name="feedback-form" >
                             <div class="form-control">
-                                <label for="nom">Nom :</label>
+                                <!-- <label for="nom">Nom :</label> -->
                                 <input type="text" name="nom" id="nom" placeholder="Nom">
                                 <i class="fas fa-check-circle"></i>
                                 <i class="fas fa-exclamation-circle"></i>
                                 <small>Error message</small>
                             </div>
                             <div class="form-control">
-                                <label for="prenom">Prénom :</label>
+                                <!-- <label for="prenom">Prénom :</label> -->
                                 <input type="text" name="prenom" id="prenom" placeholder="Prénom">
                                 <i class="fas fa-check-circle"></i>
                                 <i class="fas fa-exclamation-circle"></i>
                                 <small>Error message</small>
                             </div>
                             <div class="form-control">
-                                <label for="question">Question :</label>
+                                <!-- <label for="question">Question :</label> -->
                                 <textarea name="question" id="question" placeholder="Question"></textarea>
                                 <i class="fas fa-check-circle"></i>
                                 <i class="fas fa-exclamation-circle"></i>
@@ -150,19 +147,21 @@
                                         <div class="item-title center"><?= $data['prenom'] . " " . $data['nom'] ?></div>
                                     </div>
                                     <div class="item-content">
+                                        <strong> Q : </strong>
                                         <?= $data['question'] ?>
                                     </div>
                                     <div class="item-header not-rounded">
-                                        <div class="item-title center">CMB_Photographie</div>
+                                        <div class="item-title center">CMB_Photographie <i class="fas fa-reply"></i></div>
                                     </div>
                                     <div class="item-content">
+                                        <strong> R : </strong>
                                         <?= $data['reponse'] ?>
                                     </div>
                                 </div>
                                 <?php
                             }
                         } else {
-                            echo '<p class="erreur">Aucune question trouvée ...</p>';
+                            echo '<p class="data">Aucune question trouvée ...</p>';
                         }
                             
                         ?>

@@ -388,7 +388,7 @@
                                             <input type="text" name="nom" placeholder="Nom" value="<?= $data['nom'] ?>">
                                             <input type="text" name="prenom" placeholder="Prenom" value="<?= $data['prenom'] ?>" required>
                                             <input type="number" max="5" name="note" placeholder="Note" value="<?= $data['note'] ?>" required>
-                                            <textarea name="commentaire" placeholder="Commentaire"><?= $data['commentaire'] ?></textarea>
+                                            <textarea name="commentaire" placeholder="Commentaire" required><?= $data['commentaire'] ?></textarea>
                                             <input type="submit" name="submitA" value="Modifier">
                                         </form>
                                         <a href="?page=<?= $location ?>"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
@@ -563,8 +563,8 @@
                                                 <h1>Modification d'une question</h1>
                                             </div>
                                             <input type="text" name="nom" placeholder="Nom" value="<?= $data['nom'] ?>">
-                                            <input type="text" name="prenom" placeholder="Prenom" value="<?= $data['prenom'] ?>">
-                                            <textarea name="question" placeholder="Question"><?= $data['question'] ?></textarea>
+                                            <input type="text" name="prenom" placeholder="Prenom" value="<?= $data['prenom'] ?>" required>
+                                            <textarea name="question" placeholder="Question" required><?= $data['question'] ?></textarea>
                                             <textarea name="reponse" placeholder="Réponse"><?= $data['reponse'] ?></textarea>
                                             <input type="submit" name="submitQ" value="Modifier">
                                         </form>
@@ -948,7 +948,7 @@
                     <?php
                 }
                 else if ($_GET['page'] == "stats") {
-                    
+
                 } else {
                     header('Location: index.php');
                 }
