@@ -119,7 +119,7 @@
                             </a>
                         </div>
                         <div class="dashboard-item">
-                            <a href="?page=contacts">
+                            <a href="?page=contacts&action=validation">
                                 <div class="dashboard-title">Contact en attente</div>
                                 <div class="dashboard-number"><?= isset($data['nbContacts']) ? $data['nbContacts'] : "0" ?></div>
                             </a>
@@ -824,10 +824,131 @@
                     <?php
                 }
                 else if ($_GET['page'] == "contacts") {
+                    $table = "contacts";
+                    $nameId = "idContact";
+                    $location = "contacts";
+                    ?>
+                    <section class="contact">
+                        <div class="page-title">
+                            <h1>Contact</h1>
+                        </div>
+                        <?php
+                            if (isset($_GET['action']) && !empty($_GET['action'])) {
+                                if (isset($_GET['id']) && !empty($_GET['id'])) {
+                                    $id = $_GET['id'];
+                                    if ($_GET['action'] == "details") {
+                                        $data = bddSelectId($bdd, $table, $nameId, $id)->fetch();
+                                        ?>
+                                        <a href="?page=<?= $location ?>"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
+                                        <?php
+                                    }
+                                    if ($_GET['action'] == "delete") {
+                                        bddDelete($bdd, $table, $nameId, $id);
+                                        header("Location: ?page=$location");
+                                    }
+                                } else if ($_GET['action'] == "validation") {
+                                    ?>
+                                    <div class="list-title">Attente de validation</div>
+                                        <table>
+                                            <tr>
+                                                <th>Nom & Prénom</th>
+                                                <th>Mail</th>
+                                                <th>Sujet</th>
+                                                <th>Date</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            <?php
+                                                $select = $bdd->prepare("SELECT * FROM $table WHERE valide = '0' ORDER BY dateContact DESC");
+                                                $select->execute();
+                                                
+                                                while ($data = $select->fetch()) {
+                                                    ?>
+                                                    <tr>
+                                                        <td><?= $data['nom'] ?></td>
+                                                        <td><?= $data['mail'] ?></td>
+                                                        <td><?= $data['sujet'] ?></td>
+                                                        <td><?= dateFormatage($data['dateContact']) ?></td>
+                                                        <td>
+                                                            <a href="?page=<?= $location ?>&action=validation&sub=valide&idsb=<?= $data['idContact'] ?>"><i style="background-color:green;" class="fas fa-check"></i></a> 
+                                                            <a href="?page=<?= $location ?>&action=validation&sub=unvalide&idsb=<?= $data['idContact'] ?>" onclick="Supp(this.href); return(false)"><i style="background-color:red;" class="fas fa-times"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                    if (isset($_GET['sub']) && !empty($_GET['sub'])) {
+                                                        if (isset($_GET['idsb']) && !empty($_GET['idsb'])) {
+                                                            $id = $_GET['idsb'];
+                                                            if ($_GET['sub'] == "valide") {
+                                                                bddUpdate($bdd, $table, array("valide" => "1"), $nameId, $id);
+                                                                header("Location: ?page=$location&action=validation");
+                                                            } else if ($_GET['sub'] == "unvalide") {
+                                                                bddDelete($bdd, $table, $nameId, $id);
+                                                                header("Location: ?page=$location&action=validation");
+                                                            }
+                                                        }
+                                                    }
+                                                }
 
+                                                
+                                            ?>
+                                        </table>
+                                        <a href="?page=<?= $location ?>"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
+                                    <?php
+                                }
+                            } else {
+                                ?>
+                                <div class="list">
+                                    <div class="list-header">
+                                        <div class="list-title">Demande de contact -> <a href="?page=<?= $location ?>&action=validation"><i class="fas fa-check-circle" style="background-color:green;"></i></a></div>
+                                        <div class="list-search">
+                                            <form class="search" method="post">
+                                                <input type="text" name="recherche" placeholder="Rechercher par sujet">
+                                                <button name="search" type="submit"><i class="fa fa-search"></i></button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="list-content">
+                                        <table>
+                                            <tr>
+                                                <th>Nom & Prénom</th>
+                                                <th>Sujet</th>
+                                                <th>Date</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            <?php
+                                                if (isset($_POST['search']) && !empty($_POST['recherche'])) {
+                                                    $select = bddSearch($bdd, $table, "sujet", $_POST['recherche']);
+                                                } else {
+                                                    $select = $bdd->prepare("SELECT * FROM $table WHERE valide = '1' ORDER BY dateContact DESC");
+                                                    $select->execute();
+                                                }
+                                                
+                                                while ($data = $select->fetch()) {
+                                                    ?>
+                                                    <tr>
+                                                        <td><?= $data['nom'] ?></td>
+                                                        <td><?= $data['sujet'] ?></td>
+                                                        <td><?= dateFormatage($data['dateContact']) ?></td>
+                                                        <td>
+                                                            <a href="?page=<?= $location ?>&action=details&id=<?= $data['idContact'] ?>"><i style="background-color:blue;" class="fas fa-search"></i></a>
+                                                            <a href="?page=<?= $location ?>&action=delete&id=<?= $data['idContact'] ?>" onclick="Supp(this.href); return(false)"><i style="background-color:red;" class="fas fa-times"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                    
+                                                }
+                                            ?>
+                                            
+                                        </table>
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                        ?>
+                    </section>
+                    <?php
                 }
                 else if ($_GET['page'] == "stats") {
-
+                    
                 } else {
                     header('Location: index.php');
                 }
