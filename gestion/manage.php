@@ -15,6 +15,7 @@
     <link rel="icon" type="image/png" href="../includes/favicon.png" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="../app/css/admin.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 </head>
 <body>
     <header>
@@ -973,7 +974,173 @@
                     <?php
                 }
                 else if ($_GET['page'] == "stats") {
+                    $selectTotal = $bdd->prepare("SELECT dateVisit, MAX(nombre) as nb FROM visits GROUP BY dateVisit LIMIT 30");
+                    $selectTotal->execute();
+                    $selectIndex = $bdd->prepare("SELECT dateVisit, nombre as nb FROM visits WHERE page='index' LIMIT 30");
+                    $selectIndex->execute();
+                    $selectPhotos = $bdd->prepare("SELECT dateVisit, nombre as nb FROM visits WHERE page='photographies' LIMIT 30");
+                    $selectPhotos->execute();
+                    $selectFeedbacks = $bdd->prepare("SELECT dateVisit, nombre as nb FROM visits WHERE page='feedbacks' LIMIT 30");
+                    $selectFeedbacks->execute();
+                    $selectPrestations = $bdd->prepare("SELECT dateVisit, nombre as nb FROM visits WHERE page='prestations' LIMIT 30");
+                    $selectPrestations->execute();
+                    $selectAbout = $bdd->prepare("SELECT dateVisit, nombre as nb FROM visits WHERE page='about' LIMIT 30");
+                    $selectAbout->execute();
+                    $selectContact = $bdd->prepare("SELECT dateVisit, nombre as nb FROM visits WHERE page='contact' LIMIT 30");
+                    $selectContact->execute();
+                    $selectNombre = $bdd->prepare("SELECT page, SUM(nombre) as nb FROM visits GROUP BY page ORDER BY nb DESC");
+                    $selectNombre->execute();
 
+                    $labelsTotal = "";
+                    $nbVisitTotal = "";
+                    while ($data = $selectTotal->fetch()) {
+                        $labelsTotal = $labelsTotal . '"' . dateFormatage($data['dateVisit']) . '",';
+                        $nbVisitTotal = $nbVisitTotal . $data['nb'] . ",";
+                    }
+                    $labelsTotal = trim($labelsTotal, ",");
+                    $nbVisitTotal = trim($nbVisitTotal, ",");
+
+                    $labelsIndex = "";
+                    $nbVisitIndex = "";
+                    while ($data = $selectIndex->fetch()) {
+                        $labelsIndex = $labelsIndex . '"' . dateFormatage($data['dateVisit']) . '",';
+                        $nbVisitIndex = $nbVisitIndex . $data['nb'] . ",";
+                    }
+                    $labelsIndex = trim($labelsIndex, ",");
+                    $nbVisitIndex = trim($nbVisitIndex, ",");
+
+                    $labelsPhotos = "";
+                    $nbVisitPhotos = "";
+                    while ($data = $selectPhotos->fetch()) {
+                        $labelsPhotos = $labelsPhotos . '"' . dateFormatage($data['dateVisit']) . '",';
+                        $nbVisitPhotos = $nbVisitPhotos . $data['nb'] . ",";
+                    }
+                    $labelsPhotos = trim($labelsPhotos, ",");
+                    $nbVisitPhotos = trim($nbVisitPhotos, ",");
+
+                    $labelsFeedbacks = "";
+                    $nbVisitFeedbacks = "";
+                    while ($data = $selectFeedbacks->fetch()) {
+                        $labelsFeedbacks = $labelsFeedbacks . '"' . dateFormatage($data['dateVisit']) . '",';
+                        $nbVisitFeedbacks = $nbVisitFeedbacks . $data['nb'] . ",";
+                    }
+                    $labelsFeedbacks = trim($labelsFeedbacks, ",");
+                    $nbVisitFeedbacks = trim($nbVisitFeedbacks, ",");
+
+                    $labelsPrestations = "";
+                    $nbVisitPrestations = "";
+                    while ($data = $selectPrestations->fetch()) {
+                        $labelsPrestations = $labelsPrestations . '"' . dateFormatage($data['dateVisit']) . '",';
+                        $nbVisitPrestations = $nbVisitPrestations . $data['nb'] . ",";
+                    }
+                    $labelsPrestations = trim($labelsPrestations, ",");
+                    $nbVisitPrestations = trim($nbVisitPrestations, ",");
+
+                    $labelsAbout = "";
+                    $nbVisitAbout = "";
+                    while ($data = $selectAbout->fetch()) {
+                        $labelsAbout = $labelsAbout . '"' . dateFormatage($data['dateVisit']) . '",';
+                        $nbVisitAbout = $nbVisitAbout . $data['nb'] . ",";
+                    }
+                    $labelsAbout = trim($labelsAbout, ",");
+                    $nbVisitAbout = trim($nbVisitAbout, ",");
+
+                    $labelsContact = "";
+                    $nbVisitContact = "";
+                    while ($data = $selectContact->fetch()) {
+                        $labelsContact = $labelsContact . '"' . dateFormatage($data['dateVisit']) . '",';
+                        $nbVisitContact = $nbVisitContact . $data['nb'] . ",";
+                    }
+                    $labelsContact = trim($labelsContact, ",");
+                    $nbVisitContact = trim($nbVisitContact, ",");
+
+                    $labelsNombre = "";
+                    $nbVisitNombre = "";
+                    while ($data = $selectNombre->fetch()) {
+                        $labelsNombre = $labelsNombre . '"' . $data['page'] . '",';
+                        $nbVisitNombre = $nbVisitNombre . $data['nb'] . ",";
+                    }
+                    $labelsNombre = trim($labelsNombre, ",");
+                    $nbVisitNombre = trim($nbVisitNombre, ",");
+                    ?>
+                    <section class="stats">
+                        <div class="page-title">
+                            <h1>Statistique des visiteurs</h1>
+                        </div>
+                        <div class="totalVisit">
+                            <div class="chart-title">
+                                <h2>Nombre de visite total sur 30j :</h2>
+                            </div>
+                            <div class="chart">
+                                <canvas id="totalVisit"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="page-title">
+                            <h3>Statistique de visiteurs de chaque page sur 30j :</h3>
+                        </div>
+                        <div class="pagesVisit">
+                            <div class="pageVisit">
+                                <div class="chart-title">
+                                    <h2>Index :</h2>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="index"></canvas>
+                                </div>
+                            </div>
+                            <div class="pageVisit">
+                                <div class="chart-title">
+                                    <h2>Photographies :</h2>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="photos"></canvas>
+                                </div>
+                            </div>
+                            <div class="pageVisit">
+                                <div class="chart-title">
+                                    <h2>Avis & Questions :</h2>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="feedbacks"></canvas>
+                                </div>
+                            </div>
+                            <div class="pageVisit">
+                                <div class="chart-title">
+                                    <h2>Prestations :</h2>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="prestations"></canvas>
+                                </div>
+                            </div>
+                            <div class="pageVisit">
+                                <div class="chart-title">
+                                    <h2>A propos :</h2>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="about"></canvas>
+                                </div>
+                            </div>
+                            <div class="pageVisit">
+                                <div class="chart-title">
+                                    <h2>Contact :</h2>
+                                </div>
+                                <div class="chart">
+                                    <canvas id="contact"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="Nombre">
+                            <div class="chart-title">
+                                <h2>Total des visites :</h2>
+                            </div>
+                            <div class="chart">
+                                <canvas id="nombreVisit"></canvas>
+                            </div>
+                        </div>
+
+                    </section>
+                    <?php
                 } else {
                     header('Location: index.php');
                 }
@@ -990,7 +1157,188 @@
             if(confirm('Confirmer la suppression ?')){
             document.location.href = link;
             }
-        };
+        };        
+
+        new Chart(document.getElementById("totalVisit"), {
+            type: 'line',
+            data: {
+                labels: [<?php echo $labelsTotal; ?>],
+                datasets: [{
+                        data: [<?php echo $nbVisitTotal; ?>],
+                        label: "Nombre de visit",
+                        borderColor: "#0700D0",
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        new Chart(document.getElementById("index"), {
+            type: 'line',
+            data: {
+                labels: [<?php echo $labelsIndex; ?>],
+                datasets: [{
+                        data: [<?php echo $nbVisitIndex; ?>],
+                        label: "Nombre de visit",
+                        borderColor: "#feb60a",
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        new Chart(document.getElementById("photos"), {
+            type: 'line',
+            data: {
+                labels: [<?php echo $labelsPhotos; ?>],
+                datasets: [{
+                        data: [<?php echo $nbVisitPhotos; ?>],
+                        label: "Nombre de visit",
+                        borderColor: "#ff0062",
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        new Chart(document.getElementById("feedbacks"), {
+            type: 'line',
+            data: {
+                labels: [<?php echo $labelsFeedbacks; ?>],
+                datasets: [{
+                        data: [<?php echo $nbVisitFeedbacks; ?>],
+                        label: "Nombre de visit",
+                        borderColor: "#00dbf9",
+                        fill: true
+                    }
+                ]
+            }
+        });
+
+        new Chart(document.getElementById("prestations"), {
+            type: 'line',
+            data: {
+                labels: [<?php echo $labelsPrestations; ?>],
+                datasets: [{
+                        data: [<?php echo $nbVisitPrestations; ?>],
+                        label: "Nombre de visit",
+                        borderColor: "#da00f7",
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        new Chart(document.getElementById("about"), {
+            type: 'line',
+            data: {
+                labels: [<?php echo $labelsAbout; ?>],
+                datasets: [{
+                        data: [<?php echo $nbVisitAbout; ?>],
+                        label: "Nombre de visit",
+                        borderColor: "#feb60a",
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        new Chart(document.getElementById("contact"), {
+            type: 'line',
+            data: {
+                labels: [<?php echo $labelsContact; ?>],
+                datasets: [{
+                        data: [<?php echo $nbVisitContact; ?>],
+                        label: "Nombre de visit",
+                        borderColor: "#ff0062",
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        new Chart(document.getElementById("nombreVisit"), {
+            type: 'bar',
+            data: {
+                labels: [<?php echo $labelsNombre; ?>],
+                datasets: [{
+                        data: [<?php echo $nbVisitNombre; ?>],
+                        backgroundColor: ["#feb60a", "#ff0062","#00dbf9","#da00f7","#feb60a", "#ff0062"]
+                    }
+                ]
+            },
+            options: {
+                legend: { display: false },
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
     </script>
 </body>
 </html>
