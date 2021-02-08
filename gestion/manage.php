@@ -44,7 +44,7 @@
                     <a href="manage.php?page=photos"><i class="fas fa-images"></i> Photographies</a>
                 </div>
                 <div class="link <?= $_GET['page'] == "feedbacks" ? "active" : "" ?>">
-                    <a href="manage.php?page=feedbacks"><i class="fas fa-comment-dots"></i></i> Avis</a>
+                    <a href="manage.php?page=feedbacks"><i class="fas fa-comment-dots"></i> Avis</a>
                 </div>
                 <div class="link <?= $_GET['page'] == "questions" ? "active" : "" ?>">
                     <a href="manage.php?page=questions"><i class="fas fa-comments"></i> Questions</a>
@@ -53,7 +53,7 @@
                     <a href="manage.php?page=prestations"><i class="fas fa-tags"></i> Prestations</a>
                 </div>
                 <div class="link <?= $_GET['page'] == "contacts" ? "active" : "" ?>">
-                    <a href="manage.php?page=contacts"><i class="fas fa-envelope"></i>Demandes de contact</a>
+                    <a href="manage.php?page=contacts"><i class="fas fa-envelope"></i> Demandes de contact</a>
                 </div>
                 <div class="link <?= $_GET['page'] == "stats" ? "active" : "" ?>">
                     <a href="manage.php?page=stats"><i class="fas fa-chart-line"></i> Statistiques</a>
@@ -100,36 +100,61 @@
                     $data = $select->fetch();
                     ?>
                     <section class="dashboard">
-                        <div class="dashboard-item">
-                            <a href="?page=photos">
-                                <div class="dashboard-title">Photos online</div>
-                                <div class="dashboard-number"><?= isset($data['nbPhotos']) ? $data['nbPhotos'] : "0" ?></div>
-                            </a>
-                        </div>
-                        <div class="dashboard-item">
-                            <a href="?page=feedbacks&action=validation">
-                                <div class="dashboard-title">Avis en attente</div>
-                                <div class="dashboard-number"><?= isset($data['nbAvis']) ? $data['nbAvis'] : "0" ?></div>
-                            </a>
-                        </div>
-                        <div class="dashboard-item">
-                            <a href="?page=questions&action=validation">
-                                <div class="dashboard-title">Question en attente</div>
-                                <div class="dashboard-number"><?= isset($data['nbQuestions']) ? $data['nbQuestions'] : "0" ?></div>
-                            </a>
-                        </div>
-                        <div class="dashboard-item">
-                            <a href="?page=contacts&action=validation">
-                                <div class="dashboard-title">Contact en attente</div>
-                                <div class="dashboard-number"><?= isset($data['nbContacts']) ? $data['nbContacts'] : "0" ?></div>
-                            </a>
-                        </div>
-                        <div class="dashboard-item">
-                            <a href="?page=stats">
-                                <div class="dashboard-title">Visiteur aujourd'hui</div>
-                                <div class="dashboard-number"><?= isset($data['nbVisit']) ? $data['nbVisit'] : "0" ?></div>
-                            </a>
-                        </div>
+                        <a href="?page=photos">
+                            <div class="dashboard-item">
+                                <div class="item-header" style="background-color: #feb60a;">
+                                    <i class="fas fa-images"></i>
+                                </div>
+                                <div class="item-content">
+                                    <div class="item-title"><?= isset($data['nbPhotos']) ? $data['nbPhotos'] : "0" ?></div>
+                                    <div class="item-desc">Photos en ligne</div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="?page=feedbacks&action=validation">
+                            <div class="dashboard-item">
+                                <div class="item-header" style="background-color: #00dbf9;">
+                                    <i class="fas fa-comment-dots"></i>
+                                </div>
+                                <div class="item-content">
+                                    <div class="item-title"><?= isset($data['nbAvis']) ? $data['nbAvis'] : "0" ?></div>
+                                    <div class="item-desc">Avis en attente</div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="?page=questions&action=validation">
+                            <div class="dashboard-item">
+                                <div class="item-header" style="background-color: #da00f7;">
+                                    <i class="fas fa-comments"></i>
+                                </div>
+                                <div class="item-content">
+                                    <div class="item-title"><?= isset($data['nbQuestions']) ? $data['nbQuestions'] : "0" ?></div>
+                                    <div class="item-desc">Question en attente</div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="?page=contacts&action=validation">
+                            <div class="dashboard-item">
+                                <div class="item-header" style="background-color: #ff0062;">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="item-content">
+                                    <div class="item-title"><?= isset($data['nbContacts']) ? $data['nbContacts'] : "0" ?></div>
+                                    <div class="item-desc">Contact en attente</div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="?page=stats">
+                            <div class="dashboard-item">
+                                <div class="item-header" style="background-color: #0700D0;">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="item-content">
+                                    <div class="item-title"><?= isset($data['nbVisit']) ? $data['nbVisit'] : "0" ?></div>
+                                    <div class="item-desc">Visiteur aujourd'hui</div>
+                                </div>
+                            </div>
+                        </a>
                     </section>
                     <?php
                 }

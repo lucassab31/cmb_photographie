@@ -227,7 +227,9 @@ nav .nav-footer {
 }
 
 .page-selector {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
     margin: 20px 0;
 }
 

@@ -34,7 +34,7 @@
 
                     if (empty($userinfo['token'])) {
                         $id = $userinfo['idUser'];
-                        $token = sha1($userinfo['id']);
+                        $token = sha1($id);
                         $update = $bdd->prepare("UPDATE users SET token=? WHERE idUser=$id");
                         $update->execute(array($token));
                         setcookie("tokenCID", $token, time()+3600*24*7, "/");
