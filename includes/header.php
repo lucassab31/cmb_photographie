@@ -64,13 +64,12 @@
     <link rel="stylesheet" href="app/css/contact.css">
 </head>
 <body>
-
     <div class="loading">
-        <div class="yellow"></div>
-        <div class="red"></div>
-        <div class="blue"></div>
-        <div class="violet"></div>
+        <div class="loader">
+            <span>Loading...</span>
+        </div>
     </div>
+    
     <header>
         <div class="header-logo">
             <a href="index.php">

@@ -38,33 +38,40 @@
                 <span class="circle one"></span>
                 <span class="circle two"></span>
 
-                <form onsubmit="return false">
+                <form method="post">
                     <h3 class="title">Contact</h3>
                     <div class="input-container">
-                        <input class="input" type="text" name="name" id="name">
+                        <input class="input" type="text" name="nom" id="name" required>
                         <label for="name">Nom et prénom</label>
                         <span>Nom et prénom</span>
                     </div>
                     <div class="input-container">
-                        <input class="input" type="email" name="mail" id="mail">
+                        <input class="input" type="email" name="mail" id="mail" required>
                         <label for="mail">Adresse mail</label>
                         <span>Adresse mail</span>
                     </div>
                     <div class="input-container">
-                        <input class="input" type="text" name="subject" id="subject">
+                        <input class="input" type="text" name="subject" id="subject" required>
                         <label for="subject">Sujet</label>
                         <span>Sujet</span>
                     </div>
                     <div class="input-container textarea">
-                        <textarea class="input" name="message" id="message"></textarea>
+                        <textarea class="input" name="message" id="message" required></textarea>
                         <label for="name">Message</label>
                         <span>Message</span>
                     </div>
-                    <input class="btn-contact" type="submit" value="Envoyer">
+                    <input class="btn-contact" type="submit" name="submitC" value="Envoyer">
                 </form>
             </div>
         </div>
     </section>
+    <?php
+        if (isset($_POST['submitC'])) {
+            $date = date("Y-m-d");
+            $insert = $bdd->prepare("INSERT INTO contacts(nom, mail, sujet, message, dateContact) VALUES(?,?,?,?,?)");
+            $insert->execute(array($_POST['nom'], $_POST['mail'], $_POST['subject'], $_POST['message'], $date));
+        }
+    ?>
 </main>
 <script src="app/js/contact.js"></script>
 <!-- FOOTER -->

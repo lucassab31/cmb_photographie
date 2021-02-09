@@ -54,7 +54,7 @@
                     <a href="manage.php?page=prestations"><i class="fas fa-tags"></i> Prestations</a>
                 </div>
                 <div class="link <?= $_GET['page'] == "contacts" ? "active" : "" ?>">
-                    <a href="manage.php?page=contacts"><i class="fas fa-envelope"></i> Demandes de contact</a>
+                    <a href="manage.php?page=contacts"><i class="fas fa-envelope"></i>Demandes de contact</a>
                 </div>
                 <div class="link <?= $_GET['page'] == "stats" ? "active" : "" ?>">
                     <a href="manage.php?page=stats"><i class="fas fa-chart-line"></i> Statistiques</a>
@@ -175,6 +175,17 @@
                                     if ($_GET['action'] == "details") {
                                         $data = bddSelectId($bdd, $table, $nameId, $id)->fetch();
                                         ?>
+                                        <section class="detail" style="width: auto;">
+                                            <div class="detail-header" style="background-color: #ff0062;">
+                                                <h2><?= $data['titre'] ?></h2>
+                                            </div>
+                                            <div class="detail-content">
+                                                <p><img src="../<?= $data['chemin'] ?>" alt="<?= $data['titre'] ?>"></p>
+                                                <p><strong><i class="fas fa-map-marker-alt"></i> <?= $data['lieu'] ?></strong></p>
+                                                <p><?= $data['description'] ?></p>
+                                                <p><strong><?= dateFormatage($data['datePhoto']) ?></strong></p>
+                                            </div>
+                                        </section>
                                         <a href="?page=<?= $location ?>"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
                                         <?php
                                     }
@@ -401,6 +412,25 @@
                                     if ($_GET['action'] == "details") {
                                         $data = bddSelectId($bdd, $table, $nameId, $id)->fetch();
                                         ?>
+                                        <section class="detail">
+                                            <div class="detail-header" style="background-color: #00dbf9;">
+                                                <h2><?= $data['nom'] . " " . $data['prenom'] ?></h2>
+                                            </div>
+                                            <div class="detail-content">
+                                                <p>
+                                                    <?php
+                                                        for ($i=0; $i<$data['note']; $i++) {
+                                                            ?><i style="color:#0700D0;" class="fas fa-star"></i><?php
+                                                        }
+                                                        for ($i=0; $i<(5-$data['note']); $i++) {
+                                                            ?><i style="color:#0700D0;" class="far fa-star"></i><?php
+                                                        }
+                                                    ?>
+                                                </p>
+                                                <p><?= $data['commentaire'] ?></p>
+                                                <p><strong><?= dateFormatage($data['dateAvis']) ?></strong></p>
+                                            </div>
+                                        </section>
                                         <a href="?page=<?= $location ?>"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
                                         <?php
                                     }
@@ -578,6 +608,16 @@
                                     if ($_GET['action'] == "details") {
                                         $data = bddSelectId($bdd, $table, $nameId, $id)->fetch();
                                         ?>
+                                        <section class="detail">
+                                            <div class="detail-header" style="background-color: #da00f7;">
+                                                <h2><?= $data['nom'] . " " . $data['prenom'] ?></h2>
+                                            </div>
+                                            <div class="detail-content">
+                                                <p><strong>Q : </strong><?= $data['question'] ?></p>
+                                                <p><strong>R : </strong><?= $data['reponse'] ?></p>
+                                                <p><strong><?= dateFormatage($data['dateQuestion']) ?></strong></p>
+                                            </div>
+                                        </section>
                                         <a href="?page=<?= $location ?>"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
                                         <?php
                                     }
@@ -735,6 +775,16 @@
                                     if ($_GET['action'] == "details") {
                                         $data = bddSelectId($bdd, $table, $nameId, $id)->fetch();
                                         ?>
+                                        <section class="detail">
+                                            <div class="detail-header">
+                                                <h2><?= $data['titre'] ?></h2>
+                                            </div>
+                                            <div class="detail-content">
+                                                <p><?= $data['description'] ?></p>
+                                                <p>Ordre : <?= $data['ordre'] ?></p>
+                                                <p><strong><?= $data['prix'] . "€" ?></strong></p>
+                                            </div>
+                                        </section>
                                         <a href="?page=<?= $location ?>"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
                                         <?php
                                     }
@@ -865,6 +915,17 @@
                                     if ($_GET['action'] == "details") {
                                         $data = bddSelectId($bdd, $table, $nameId, $id)->fetch();
                                         ?>
+                                        <section class="detail">
+                                            <div class="detail-header" style="background-color: #ff0062;">
+                                                <h2><?= $data['nom'] ?></h2>
+                                                <h3><?= $data['mail'] ?></h3>
+                                            </div>
+                                            <div class="detail-content">
+                                                <p><strong>Sujet : </strong><?= $data['sujet'] ?></p>
+                                                <p><?= $data['message'] ?></p>
+                                                <p><strong><?= dateFormatage($data['dateContact']) ?></strong></p>
+                                            </div>
+                                        </section>
                                         <a href="?page=<?= $location ?>"><i style="background-color:grey;" class="fas fa-arrow-left"></i></a>
                                         <?php
                                     }
@@ -1165,7 +1226,7 @@
                 labels: [<?php echo $labelsTotal; ?>],
                 datasets: [{
                         data: [<?php echo $nbVisitTotal; ?>],
-                        label: "Nombre de visit",
+                        label: "Nombre de visite",
                         borderColor: "#0700D0",
                         fill: true
                     }
@@ -1189,7 +1250,7 @@
                 labels: [<?php echo $labelsIndex; ?>],
                 datasets: [{
                         data: [<?php echo $nbVisitIndex; ?>],
-                        label: "Nombre de visit",
+                        label: "Nombre de visite",
                         borderColor: "#feb60a",
                         fill: true
                     }
@@ -1213,7 +1274,7 @@
                 labels: [<?php echo $labelsPhotos; ?>],
                 datasets: [{
                         data: [<?php echo $nbVisitPhotos; ?>],
-                        label: "Nombre de visit",
+                        label: "Nombre de visite",
                         borderColor: "#ff0062",
                         fill: true
                     }
@@ -1237,11 +1298,21 @@
                 labels: [<?php echo $labelsFeedbacks; ?>],
                 datasets: [{
                         data: [<?php echo $nbVisitFeedbacks; ?>],
-                        label: "Nombre de visit",
+                        label: "Nombre de visite",
                         borderColor: "#00dbf9",
                         fill: true
                     }
                 ]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
             }
         });
 
@@ -1251,7 +1322,7 @@
                 labels: [<?php echo $labelsPrestations; ?>],
                 datasets: [{
                         data: [<?php echo $nbVisitPrestations; ?>],
-                        label: "Nombre de visit",
+                        label: "Nombre de visite",
                         borderColor: "#da00f7",
                         fill: true
                     }
@@ -1275,7 +1346,7 @@
                 labels: [<?php echo $labelsAbout; ?>],
                 datasets: [{
                         data: [<?php echo $nbVisitAbout; ?>],
-                        label: "Nombre de visit",
+                        label: "Nombre de visite",
                         borderColor: "#feb60a",
                         fill: true
                     }
@@ -1299,7 +1370,7 @@
                 labels: [<?php echo $labelsContact; ?>],
                 datasets: [{
                         data: [<?php echo $nbVisitContact; ?>],
-                        label: "Nombre de visit",
+                        label: "Nombre de visite",
                         borderColor: "#ff0062",
                         fill: true
                     }

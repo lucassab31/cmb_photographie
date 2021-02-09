@@ -539,6 +539,45 @@ section {
     color: #0600a8;
 }
 
+.detail {
+    text-align: center;
+    background-color: #fff;
+    width: 500px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    box-shadow: 0 4px 20px 0 rgb(0 0 0 / 14%), 0 7px 10px -5px rgb(255 152 0 / 40%);
+    overflow: hidden;
+}
+
+.detail-header {
+    background-color: #0700D0;
+    color: #fff;
+    padding: 20px;
+}
+
+.detail-content {
+    margin: 10px;
+}
+
+.detail-content p {
+    margin: 10px;
+}
+
+.detail-content p i {
+   color: black;
+}
+
+.detail-content p i:hover {
+    box-shadow: none;
+}
+
+.detail-content p img{
+    max-width: 90%;
+}
+
 @media only screen and (min-width: 1024px) {
     main {
         padding-left: 420px;
