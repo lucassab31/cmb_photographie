@@ -108,13 +108,6 @@
     -moz-transition: all 200ms ease-in-out;
     -ms-transition: all 200ms ease-in-out;
     -o-transition: all 200ms ease-in-out;
-    filter: blur(1px);
-    -webkit-filter: blur(1px);
-}
-
-.index-img-1:hover, .index-img-2:hover, .index-img-1:focus, .index-img-2:focus {
-    filter: blur(0);
-    -webkit-filter: blur(0);
 }
 
 .index-footer {
@@ -130,7 +123,7 @@
 }
 
 .index-footer a {
-    color: #ffffff;
+    color: black;
 }
 
 .index-footer:hover, .index-footer:focus {

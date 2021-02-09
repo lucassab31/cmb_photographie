@@ -379,7 +379,7 @@
                                                             <?php } else { ?>
                                                                 <a href="?page=<?= $location ?>&action=visi&id=<?= $data['idPhoto'] ?>"><i style="background-color:#668cff;" class="fas fa-eye-slash"></i></a>
                                                             <?php } ?>
-                                                            <a href="?page=<?= $location ?>&action=delete&id=<?= $data['idPhoto'] ?>" onclick="Supp(this.href); return(false)"><i style="background-color:red;" class="fas fa-times"></i></a>
+                                                            <a href="?page=<?= $location ?>&action=delete&id=<?= $data['idPhoto'] ?>" onclick="Supp(this.href); return false;"><i style="background-color:red;" class="fas fa-times"></i></a>
                                                         </td>
                                                     </tr>
                                                     <?php
@@ -1216,184 +1216,132 @@
     <script>
         function Supp(link){
             if(confirm('Confirmer la suppression ?')){
-            document.location.href = link;
+                document.location.href = link;
             }
-        };        
+        };
+
+        var opt = {
+            scales: {
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        };
 
         new Chart(document.getElementById("totalVisit"), {
             type: 'line',
             data: {
-                labels: [<?php echo $labelsTotal; ?>],
+                labels: [<?= isset($labelsTotal) ? $labelsTotal : "0" ?>],
                 datasets: [{
-                        data: [<?php echo $nbVisitTotal; ?>],
+                        data: [<?= isset($nbVisitTotal) ? $nbVisitTotal : "0" ?>],
                         label: "Nombre de visite",
                         borderColor: "#0700D0",
                         fill: true
                     }
                 ]
             },
-            options: {
-                scales: {
-                    yAxes: [{
-                        display: true,
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
+            options: opt
         });
 
         new Chart(document.getElementById("index"), {
             type: 'line',
             data: {
-                labels: [<?php echo $labelsIndex; ?>],
+                labels: [<?= isset($labelsIndex) ? $labelsIndex : "0" ?>],
                 datasets: [{
-                        data: [<?php echo $nbVisitIndex; ?>],
+                        data: [<?= isset($nbVisitIndex) ? $nbVisitIndex : "0" ?>],
                         label: "Nombre de visite",
                         borderColor: "#feb60a",
                         fill: true
                     }
                 ]
             },
-            options: {
-                scales: {
-                    yAxes: [{
-                        display: true,
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
+            options: opt
         });
 
         new Chart(document.getElementById("photos"), {
             type: 'line',
             data: {
-                labels: [<?php echo $labelsPhotos; ?>],
+                labels: [<?= isset($labelsPhotos) ? $labelsPhotos : "0" ?>],
                 datasets: [{
-                        data: [<?php echo $nbVisitPhotos; ?>],
+                        data: [<?= isset($nbVisitPhotos) ? $nbVisitPhotos : "0" ?>],
                         label: "Nombre de visite",
                         borderColor: "#ff0062",
                         fill: true
                     }
                 ]
             },
-            options: {
-                scales: {
-                    yAxes: [{
-                        display: true,
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
+            options: opt
         });
 
         new Chart(document.getElementById("feedbacks"), {
             type: 'line',
             data: {
-                labels: [<?php echo $labelsFeedbacks; ?>],
+                labels: [<?= isset($labelsFeedbacks) ? $labelsFeedbacks : "0" ?>],
                 datasets: [{
-                        data: [<?php echo $nbVisitFeedbacks; ?>],
+                        data: [<?= isset($nbVisitFeedbacks) ? $nbVisitFeedbacks : "0" ?>],
                         label: "Nombre de visite",
                         borderColor: "#00dbf9",
                         fill: true
                     }
                 ]
             },
-            options: {
-                scales: {
-                    yAxes: [{
-                        display: true,
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
+            options: opt
         });
 
         new Chart(document.getElementById("prestations"), {
             type: 'line',
             data: {
-                labels: [<?php echo $labelsPrestations; ?>],
+                labels: [<?= isset($labelsPrestations) ? $labelsPrestations : "0" ?>],
                 datasets: [{
-                        data: [<?php echo $nbVisitPrestations; ?>],
+                        data: [<?= isset($nbVisitPrestations) ? $nbVisitPrestations : "0" ?>],
                         label: "Nombre de visite",
                         borderColor: "#da00f7",
                         fill: true
                     }
                 ]
             },
-            options: {
-                scales: {
-                    yAxes: [{
-                        display: true,
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
+            options: opt
         });
 
         new Chart(document.getElementById("about"), {
             type: 'line',
             data: {
-                labels: [<?php echo $labelsAbout; ?>],
+                labels: [<?= isset($labelsAbout) ? $labelsAbout : "0" ?>],
                 datasets: [{
-                        data: [<?php echo $nbVisitAbout; ?>],
+                        data: [<?= isset($nbVisitAbout) ? $nbVisitAbout : "0" ?>],
                         label: "Nombre de visite",
                         borderColor: "#feb60a",
                         fill: true
                     }
                 ]
             },
-            options: {
-                scales: {
-                    yAxes: [{
-                        display: true,
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
+            options: opt
         });
 
         new Chart(document.getElementById("contact"), {
             type: 'line',
             data: {
-                labels: [<?php echo $labelsContact; ?>],
+                labels: [<?= isset($labelsContact) ? $labelsContact : "0" ?>],
                 datasets: [{
-                        data: [<?php echo $nbVisitContact; ?>],
+                        data: [<?= isset($nbVisitContact) ? $nbVisitContact : "0" ?>],
                         label: "Nombre de visite",
                         borderColor: "#ff0062",
                         fill: true
                     }
                 ]
             },
-            options: {
-                scales: {
-                    yAxes: [{
-                        display: true,
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
+            options: opt
         });
 
         new Chart(document.getElementById("nombreVisit"), {
             type: 'bar',
             data: {
-                labels: [<?php echo $labelsNombre; ?>],
+                labels: [<?= isset($labelsNombre) ? $labelsNombre : "0" ?>],
                 datasets: [{
-                        data: [<?php echo $nbVisitNombre; ?>],
+                        data: [<?= isset($nbVisitNombre) ? $nbVisitNombre : "0" ?>],
                         backgroundColor: ["#feb60a", "#ff0062","#00dbf9","#da00f7","#feb60a", "#ff0062"]
                     }
                 ]
