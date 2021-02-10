@@ -15,10 +15,8 @@
         <?php
             if (isset($_GET['action']) && !empty($_GET['action'])) {
                 if ($_GET['action'] == "pro") {
-                    $type = "Professionnelle";
-                    $select = $bdd->prepare("SELECT * FROM photos WHERE visible='1' AND type=$type ORDER BY datePhoto DESC");
+                    $select = $bdd->prepare("SELECT * FROM photos WHERE visible='1' AND type='Professionnelle' ORDER BY datePhoto DESC");
                 } else if ($_GET['action'] == "perso") {
-                    $type = "Personnelle";
                     $select = $bdd->prepare("SELECT * FROM photos WHERE visible='1' AND type='Personnelle' ORDER BY datePhoto DESC");
                 } else {
                     header('Location: photographies.php');
@@ -43,7 +41,7 @@
                                         ?><h4 class="content-subtitle"><i class="fas fa-map-marker-alt"></i> <?= $data['lieu'] ?></h4><?php
                                     }
                                 ?>
-                                <p class="content-text"><?= $data['description'] ?></p>
+                                <p class="content-text"><?= str_replace("\n", "<br/>", $data['description'])  ?></p>
                             </div>
                         </div>
                     </div>

@@ -20,10 +20,9 @@
 <body>
     <header>
         <div class="loading">
-            <div class="yellow"></div>
-            <div class="red"></div>
-            <div class="blue"></div>
-            <div class="violet"></div>
+            <div class="loader">
+                <span>Loading...</span>
+            </div>
         </div>
 
         <nav class="nav">
@@ -145,6 +144,17 @@
                                 </div>
                             </div>
                         </a>
+                        <a href="?page=photos">
+                            <div class="dashboard-item big">
+                                <div class="item-header" style="background-color: #1abc9c;">
+                                    <i class="fas fa-database"></i>
+                                </div>
+                                <div class="item-content">
+                                    <div class="item-title"><?= round(TailleDossier("../img")/(1024*1024),2); ?>MB</div>
+                                    <div class="item-desc">Taille total des photos</div>
+                                </div>
+                            </div>
+                        </a>
                         <a href="?page=stats">
                             <div class="dashboard-item">
                                 <div class="item-header" style="background-color: #0700D0;">
@@ -182,7 +192,7 @@
                                             <div class="detail-content">
                                                 <p><img src="../<?= $data['chemin'] ?>" alt="<?= $data['titre'] ?>"></p>
                                                 <p><strong><i class="fas fa-map-marker-alt"></i> <?= $data['lieu'] ?></strong></p>
-                                                <p><?= $data['description'] ?></p>
+                                                <p><?= str_replace("\n", "<br/>", $data['description'])  ?></p>
                                                 <p><strong><?= dateFormatage($data['datePhoto']) ?></strong></p>
                                             </div>
                                         </section>
@@ -246,10 +256,24 @@
                             
                                                     if ($image_src !== false)
                                                     {
+                                                        $image_width = 1920;
+                                                        if ($image_size[0] == $image_width)
+                                                        {
+                                                            $image_finale = $image_src;
+                                                        }
+                                                        else
+                                                        {
+                                                            $new_width[0] = $image_width;
+                                                            $reduction = (($image_width * 100) / $image_size[0]);
+                                                            $new_height[1] = round((($image_size[1] * $reduction) / 100),0);
+
+                                                            $image_finale = imagecreatetruecolor($new_width[0], $new_height[1]);
+                                                            imagecopyresampled($image_finale, $image_src, 0, 0, 0, 0, $new_width[0], $new_height[1], $image_size[0], $image_size[1]);
+                                                        }
                                                         $data = bddSelectId($bdd, $table, $nameId, $id)->fetch();
                                                         $path = 'img/' . sha1($id . reset($image)) . '.jpg';
                                                         bddUpdate($bdd, $table, array("chemin"=>$path), $nameId, $id);
-                                                        imagejpeg($image_src,'../'.$path);
+                                                        imagejpeg($image_finale,'../'.$path);
                                                     }
                                                 }
                                             }
@@ -323,12 +347,27 @@
 
                                             if ($image_src !== false)
                                             {
+                                                $image_width = 1920;
+                                                if ($image_size[0] == $image_width)
+                                                {
+                                                    $image_finale = $image_src;
+                                                }
+                                                else
+                                                {
+                                                    $new_width[0] = $image_width;
+                                                    $reduction = (($image_width * 100) / $image_size[0]);
+                                                    $new_height[1] = round((($image_size[1] * $reduction) / 100),0);
+
+                                                    $image_finale = imagecreatetruecolor($new_width[0], $new_height[1]);
+                                                    imagecopyresampled($image_finale, $image_src, 0, 0, 0, 0, $new_width[0], $new_height[1], $image_size[0], $image_size[1]);
+                                                }
+
                                                 $select = $bdd->prepare("SELECT * FROM $table ORDER BY $nameId DESC LIMIT 1");
                                                 $select->execute();
                                                 $data = $select->fetch();
                                                 $path = 'img/' . sha1($data['idPhoto'] . reset($image)) . '.jpg';
                                                 bddUpdate($bdd, $table, array("chemin"=>$path), $nameId, $data['idPhoto']);
-                                                imagejpeg($image_src,'../'.$path);
+                                                imagejpeg($image_finale,'../'.$path);
                                             }
                                         }
                                         header("Location: ?page=$location");
@@ -780,7 +819,7 @@
                                                 <h2><?= $data['titre'] ?></h2>
                                             </div>
                                             <div class="detail-content">
-                                                <p><?= $data['description'] ?></p>
+                                                <p><?= str_replace("\n", "<br/>", $data['description']) ?></p>
                                                 <p>Ordre : <?= $data['ordre'] ?></p>
                                                 <p><strong><?= $data['prix'] . "€" ?></strong></p>
                                             </div>
@@ -1051,6 +1090,11 @@
                     $selectContact->execute();
                     $selectNombre = $bdd->prepare("SELECT page, SUM(nombre) as nb FROM visits GROUP BY page ORDER BY nb DESC");
                     $selectNombre->execute();
+                    $selectMax = $bdd->prepare("SELECT MAX(nombre) as nb FROM visits LIMIT 30");
+                    $selectMax->execute();
+
+                    $dataMax = $selectMax->fetch();
+                    $max = $dataMax['nb'];
 
                     $labelsTotal = "";
                     $nbVisitTotal = "";
@@ -1225,7 +1269,8 @@
                 yAxes: [{
                     display: true,
                     ticks: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        max: <?= isset($max) ? $max : "50" ?>
                     }
                 }]
             }

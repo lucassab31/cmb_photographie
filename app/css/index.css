@@ -48,7 +48,7 @@
 }
 
 .logo-front img {
-    border: 1px solid #ffffff;
+    border: 2px solid #ffffff;
     border-radius: 50%;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
@@ -57,6 +57,8 @@
 }
 
 .logo-back {
+    background-image: url('../../includes/canon.jpg');
+    background-repeat: no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -120,10 +122,17 @@
     -moz-transition: all 200ms ease-in-out;
     -ms-transition: all 200ms ease-in-out;
     -o-transition: all 200ms ease-in-out;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
 }
 
 .index-footer a {
-    color: black;
+    color: white;
 }
 
 .index-footer:hover, .index-footer:focus {

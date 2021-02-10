@@ -26,13 +26,15 @@
 }
 
 .about-image {
-    display: flex;
-    justify-content: center;
+    width: 220px;
+    height: 220px;
+    margin: auto;
 }
 
 .about-image img {
     border: 2px solid white;
     width: 220px;
+    height: 220px;
     border-radius: 50%;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
@@ -56,4 +58,14 @@
 
 .about-desc p {
     margin: 20px 0;
+}
+
+@media only screen and (max-width: 900px) {
+    .about-desc {
+        transform: translateY(-9%);
+        -webkit-transform: translateY(-9%);
+        -moz-transform: translateY(-9%);
+        -ms-transform: translateY(-9%);
+        -o-transform: translateY(-9%);
+}
 }

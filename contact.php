@@ -7,16 +7,28 @@
             <div class="contact-info">
                 <h3 class="title">Contactez-moi</h3>
                 <p class="text">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi recusandae tempore ipsa? Ea non praesentium quod rerum eum quidem fugit, sed laborum velit unde, consequuntur deleniti dignissimos voluptatibus architecto odit!
+                    <p>
+                        N'hésitez pas à me contacter pour tout renseignement supplémentaire ou pour connaître davantage de détails à propos de mes prestations photos.
+                        Également et surtout par rapport aux prises de rendez-vous pour un shoot, vous êtes au bon endroit !
+                    </p>
+                    <br/>
+                    <p>
+                        PS : la rubrique « Avis et Questions » comporte peut-être les réponses à vos questionnements, allez jeter un coup d'œil !
+                    </p>
+                    <br/>
+                    <p>
+                        Merci pour votre visite. 
+                        A bientôt:)
+                    </p>
                 </p>
                 <div class="info">
                     <div class="information">
                         <i class="fas fa-phone"></i>
-                        <p>06 11 11 11 11</p>
+                        <p>06 95 46 13 16</p>
                     </div>
                     <div class="information">
                         <i class="far fa-envelope"></i>
-                        <p>abcd@gmail.com</p>
+                        <p>cloem31@gmail.com</p>
                     </div>
                     <div class="information">
                         <i class="fas fa-map-marker-alt"></i>

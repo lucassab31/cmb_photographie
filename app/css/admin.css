@@ -202,32 +202,58 @@ nav .link.active {
 	align-items: center;
 }
 
-.loading > div {
-	width: 3vw;
-	height: 3vw;
-	border-radius: 100%;
-	margin: 2vw;
-	background-image: linear-gradient(145deg, rgba(255,255,255,0.5) 0%, rgba(0,0,0,0) 100%);
-	animation: bounce 1.5s 0.5s linear infinite;
+.loader {
+    width: 10em;
+    height: 10em;
+    font-size: 25px;
+    box-sizing: border-box;
+    border-top: 0.3em solid #feb60a;
+    border-radius: 50%;
+    position: relative;
+    animation: rotating 2s ease-in-out infinite;
+    --direction: 1;
 }
 
-.yellow {
-	background-color: var(--yellow);
+.loader::before,
+.loader::after {
+    content: '';
+    position: absolute;
+    width: inherit;
+    height: inherit;
+    border-radius: 50%;
+    box-sizing: border-box;
+    top: -0.2em;
 }
 
-.red {
-	background-color: var(--red);
-	animation-delay: 0.1s;
+.loader::before {
+    border-top: 0.3em solid #00dbf9;
+    transform: rotate(120deg);
 }
 
-.blue {
-	background-color: var(--blue);
-	animation-delay: 0.2s;
+.loader::after {
+    border-top: 0.3em solid #da00f7;
+    transform: rotate(240deg);
 }
 
-.violet {
-	background-color: var(--violet);
-	animation-delay: 0.3s;
+.loader span {
+    position: absolute;
+    color: white;
+    width: inherit;
+    height: inherit;
+    text-align: center;
+    line-height: 10em;
+    animation: rotating 2s linear infinite;
+    --direction: -1;
+}
+
+@keyframes rotating {
+    50% {
+        transform: rotate(calc(180deg * var(--direction)));
+    }
+
+    100% {
+        transform: rotate(calc(360deg * var(--direction)));
+    }
 }
 
 .connexion {
@@ -272,6 +298,10 @@ nav .link.active {
     -ms-border-radius: 4px;
     -o-border-radius: 4px;
     box-shadow: 0 4px 20px 0 rgb(0 0 0 / 14%), 0 7px 10px -5px rgb(255 152 0 / 40%);
+}
+
+.dashboard-item.big {
+    width: 300px;
 }
 
 .dashboard-item .item-header {

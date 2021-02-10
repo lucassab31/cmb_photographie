@@ -18,13 +18,13 @@
                             <div class="prestation-price">à partir de <?= $data['prix'] ?>€</div>
                         </div>
                         <div class="prestation-desc">
-                            <?= $data['description'] ?>
+                            <?= str_replace("\n", "<br/>", $data['description'])  ?>
                         </div>
                     </div>
                     <?php
                 }
             } else {
-                echo '<p class="erreur">Aucune prestation disponible ...</p>';
+                echo '<p class="data">Aucune prestation disponible ...</p>';
             }
         ?>
         
