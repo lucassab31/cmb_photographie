@@ -132,7 +132,7 @@
                     if (isset($_POST['submitQ'])) {
                         $insert = $bdd->prepare("INSERT INTO questions(nom, prenom, question, dateQuestion) VALUES(?, ?, ?, ?)");
                         $insert->execute(array($_POST['nom'], $_POST['prenom'], $_POST['question'], Date("Y-m-d")));
-                        echo '<script>openPopUp("popup1", "Question","Votre question a bien été envoyé, elle est en attente de validation et sera affiché avec la réponse d\'ici peu");</script>';
+                        echo '<script>openPopUp("popup1", "Question","Votre question a bien été envoyée, elle est en attente de validation et sera affichée avec la réponse d\'ici peu");</script>';
                     }
                 } else {
                     $selectQ = bddSelectId($bdd, "questions", "visible", "1");

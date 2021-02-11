@@ -4,3 +4,4 @@ app/php/db.php
 app/php/dbStructure.sql
 img/*
 includes/*.old
+mail/*.php

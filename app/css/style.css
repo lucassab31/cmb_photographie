@@ -501,6 +501,10 @@ footer a {
         margin: 4px 2px;
     }
 
+    .popup {
+        width: 90%;
+    }
+
     footer {
         padding-bottom: 30px;
     }
