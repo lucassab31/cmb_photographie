@@ -122,5 +122,15 @@
                 </div>
             </div>
         </nav>
+
+        <div id="popup1" class="overlay">
+            <div class="popup">
+                <h2 id='popup1Title'>Test de popup</h2>
+                <button onclick="closePopUp('popup1');" >&times;</button>
+                <div class="content" id="popup1Message">
+                    Votre message a bien été envoyé !
+                </div>
+            </div>
+    </div>
     </header>
     <script src="app/js/app.js"></script>

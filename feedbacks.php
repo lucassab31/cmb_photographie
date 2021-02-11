@@ -59,7 +59,7 @@
                     if (isset($_POST['submitF'])) {
                         $insert = $bdd->prepare("INSERT INTO avis(nom, prenom, note, commentaire, dateAvis) VALUES(?, ?, ?, ?, ?)");
                         $insert->execute(array($_POST['nom'], $_POST['prenom'], $_POST['note'], $_POST['commentaire'], Date("Y-m-d")));
-                        header("Location: ?page=avis");
+                        echo '<script>openPopUp("popup1", "Avis","Votre avis a bien été envoyé, il est en attente de validation et sera affiché d\'ici peu");</script>';
                     }
                 } else {
                     $selectA = bddSelectId($bdd, "avis", "visible", "1");
@@ -132,7 +132,7 @@
                     if (isset($_POST['submitQ'])) {
                         $insert = $bdd->prepare("INSERT INTO questions(nom, prenom, question, dateQuestion) VALUES(?, ?, ?, ?)");
                         $insert->execute(array($_POST['nom'], $_POST['prenom'], $_POST['question'], Date("Y-m-d")));
-                        header("Location: ?page=questions");
+                        echo '<script>openPopUp("popup1", "Question","Votre question a bien été envoyé, elle est en attente de validation et sera affiché avec la réponse d\'ici peu");</script>';
                     }
                 } else {
                     $selectQ = bddSelectId($bdd, "questions", "visible", "1");

@@ -1,4 +1,12 @@
 <?php require_once('includes/header.php') ?>
+<?php
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
+
+    require 'mail/Exception.php';
+    require 'mail/PHPMailer.php';
+    require 'mail/SMTP.php';
+?>
 
 <!-- MAIN -->
 <main>
@@ -82,8 +90,38 @@
             $date = date("Y-m-d");
             $insert = $bdd->prepare("INSERT INTO contacts(nom, mail, sujet, message, dateContact) VALUES(?,?,?,?,?)");
             $insert->execute(array($_POST['nom'], $_POST['mail'], $_POST['subject'], $_POST['message'], $date));
+
+            $mail = new PHPMailer;
+            $mail->isSMTP(); 
+            $mail->SMTPDebug = 0; // 0 = off (for production use) - 1 = client messages - 2 = client and server messages
+            $mail->Host = "smtp.gmail.com"; // use $mail->Host = gethostbyname('smtp.gmail.com'); // if your network does not support SMTP over IPv6
+            $mail->Port = 587; // TLS only
+            $mail->SMTPSecure = 'tls'; // ssl is deprecated
+            $mail->SMTPAuth = true;
+            $mail->Username = 'lucsab05@gmail.com'; // email
+            $mail->Password = 'lucas3131'; // password
+            $mail->setFrom('cloem31@gmail.com', 'CMB_Photographie Website'); // From email and name
+            // $mail->addAddress('cloem31@gmail.com', 'Cloé'); // to email and name
+            $mail->addAddress('luqui31@gmail.com', 'Lucas'); // to email and name
+            $mail->Subject = "Nouvelle demande de contact - " . $_POST['nom'];
+            $mail->msgHTML("Vous avez une nouvelle demande de contact en attente : https://cmb-photographie.000webhostapp.com/gestion/manage.php?page=contacts&action=validation"); //$mail->msgHTML(file_get_contents('contents.html'), __DIR__); //Read an HTML message body from an external file, convert referenced images to embedded,
+            $mail->AltBody = 'HTML messaging not supported'; // If html emails is not supported by the receiver, show this body
+            // $mail->addAttachment('images/phpmailer_mini.png'); //Attach an image file
+            $mail->SMTPOptions = array(
+                                'ssl' => array(
+                                    'verify_peer' => false,
+                                    'verify_peer_name' => false,
+                                    'allow_self_signed' => true
+                                )
+                            );
+            if(!$mail->send()){
+                echo "Mailer Error: " . $mail->ErrorInfo;
+            }else{
+                echo '<script>openPopUp("popup1", "Demande de contact","Votre message a bien été envoyé");</script>';
+            }
         }
     ?>
+    
 </main>
 <script src="app/js/contact.js"></script>
 <!-- FOOTER -->
